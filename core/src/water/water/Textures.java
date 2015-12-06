@@ -9,15 +9,15 @@ public class Textures {
 	public static TextureRegion platform = loadTexture("platform.png");
 	public static TextureRegion playerRun = loadTexture("player_run.png");
 	public static TextureRegion water = loadTexture("water.png");
-	public static TextureRegion egg = loadTexture("egg_1.jpg");
 	public static TextureRegion goose = loadTexture("platform.png");
-	
+	public static TextureRegion grass = loadTexture("grass.png");
+	public static TextureRegion backdrop = loadTexture("backdrop.png");
 	
 	
 	//debug
 	public static TextureRegion arrow = loadTexture("arrow.png");
 	
-	private static TextureRegion loadTexture(String path) {
+	public static TextureRegion loadTexture(String path) {
 		TextureRegion result = null;
 		
 		Texture texture = new Texture(path);

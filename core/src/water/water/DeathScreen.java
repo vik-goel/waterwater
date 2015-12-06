@@ -23,8 +23,6 @@ public class DeathScreen implements Screen {
 	}
 
 	public void render(float delta) {
-		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
 		batch.begin();
 		font.draw(batch, "Press space to restart", 200, 200);
 		batch.end();

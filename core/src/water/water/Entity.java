@@ -6,11 +6,10 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public abstract class Entity {
 
-	public static final float GRAVITY = 9.8f * 70;
+	public static final float GRAVITY = 9.8f * 100;//9.8f * 70;
 	
 	public static SpriteBatch batch = new SpriteBatch();
 	public static ShapeRenderer sr = new ShapeRenderer();
@@ -26,7 +25,8 @@ public abstract class Entity {
 	public Animation animation;
 	
 	public boolean removed = false;
-	public float alpha = 1;
+	public float alpha = 1; //TODO: Nothing uses alpha anymore?
+	public boolean seamlessTexture = false;
 	
 	public Entity(float x, float y, float drawWidth, float drawHeight, Animation animation) {
 		this(x, y, drawWidth, drawHeight, animation.getRegion());
@@ -53,7 +53,24 @@ public abstract class Entity {
 		if(tex != null) {
 			batch.begin();
 			batch.setColor(1, 1, 1, alpha);
-			batch.draw(tex, x - drawWidth * 0.5f - game.cameraX, y - drawHeight * 0.5f, drawWidth, drawHeight);
+			
+			float xStart = x - drawWidth * 0.5f - game.cameraX;
+			float yStart = y - drawHeight * 0.5f;
+			
+			float widthToDraw = drawWidth;
+			
+			if(seamlessTexture) {
+				while(widthToDraw > tex.getRegionWidth()) {
+					batch.draw(tex, xStart, yStart, tex.getRegionWidth(), drawHeight);
+					widthToDraw -= tex.getRegionWidth();
+					xStart += tex.getRegionWidth();
+				}
+			}
+			
+			if(widthToDraw > 0) {
+				batch.draw(tex, xStart, yStart, widthToDraw, drawHeight);
+			}
+			
 			batch.end();
 		}
 		

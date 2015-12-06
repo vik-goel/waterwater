@@ -2,16 +2,16 @@ package water.water;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.graphics.GL20;
 
 public class GameScreen implements Screen {
 
 	public ArrayList<Entity> entities = new ArrayList<Entity>(1000);
 	public ArrayList<Entity> objects = new ArrayList<Entity>(100);
 	public ArrayList<Entity> particles = new ArrayList<Entity>(900);
+	public ArrayList<Entity> clouds = new ArrayList<Entity>(100);
 	
 	public Input input;
 	
@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
 		
 		particleGrid = new ParticleGrid(this);
 		
-		addObject(new Platform(0, 0, Gdx.graphics.getWidth(), 50, false, Textures.platform));
+		addObject(new Platform(0, 0, Gdx.graphics.getWidth(), 50, false, Textures.grass));
 		//addObject(new Platform(750, 150));
 		//addObject(new Platform(1100, 250));
 		//addObject(new Platform(1300, 0, 50, 5000));
@@ -53,7 +53,13 @@ public class GameScreen implements Screen {
 	}
 	
 	public void addObject(Entity e) {
-		objects.add(e);
+		if(e instanceof Cloud) {
+			clouds.add(e);
+		} else {
+			objects.add(e);
+		}
+		
+		
 		entities.add(e);
 	}
 	
@@ -63,9 +69,6 @@ public class GameScreen implements Screen {
 	}
 
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.5f, 0.9f, 0.5f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
 		final float maxDt = 5;
 		float dt = Math.min(maxDt, Gdx.graphics.getDeltaTime());
 		
@@ -73,6 +76,7 @@ public class GameScreen implements Screen {
 		
 		particleGrid.draw(dt);
 		
+		updateEntityList(clouds, dt);
 		updateEntityList(particles, dt);
 		updateEntityList(objects, dt);
 		
@@ -87,6 +91,7 @@ public class GameScreen implements Screen {
 				entities.remove(i--);
 				particles.remove(e);
 				objects.remove(e);
+				clouds.remove(e);
 				
 				//TODO: Keep a free list of removed entities
 			} else {
