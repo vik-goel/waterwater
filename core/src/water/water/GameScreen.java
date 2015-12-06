@@ -6,6 +6,9 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameScreen implements Screen {
 
@@ -139,9 +142,27 @@ public class GameScreen implements Screen {
 		updateEntityList(particles, dt);
 		updateEntityList(objects, dt);
 		
-		Entity.batch.begin();
-		font.draw(Entity.batch, "Score: " + (int)(score), 100, 100);
-		Entity.batch.end();
+		drawGUIBar(dt);
+	}
+	
+	public void drawGUIBar(float dt) {
+		ShapeRenderer sr = Entity.sr;
+		SpriteBatch batch = Entity.batch;
+		
+		float barHeight = Gdx.graphics.getHeight() * 0.15f;
+		
+		Util.enableBlend();
+		
+		float minY = Gdx.graphics.getHeight() - barHeight;
+		
+		sr.begin(ShapeType.Filled);
+		sr.setColor(0, 0, 0, 0.5f);
+		sr.rect(0, minY, Gdx.graphics.getWidth(), barHeight);
+		sr.end();
+		
+		batch.begin();
+		font.draw(batch, "Score: " + (int)(score), Gdx.graphics.getWidth() * 0.2f, minY + 50);
+		batch.end();
 	}
 	
 	public void updateEntityList(ArrayList<Entity> entities, float dt) {

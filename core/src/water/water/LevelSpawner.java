@@ -61,6 +61,9 @@ public class LevelSpawner {
 					collideWidthC *= 0.7f;
 					shrubHeight = 125 + 50 * random.nextFloat();
 				}
+				else if(tex == Textures.egg2) {
+					
+				}
 				
 				float shrubWidth = shrubHeight * ((float)tex.getRegionWidth() / (float)tex.getRegionHeight());
 				

@@ -20,6 +20,7 @@ public class Textures {
 	
 	public static TextureRegion poop = loadTexture("poop.png");
 	public static TextureRegion egg = loadTexture("egg.png");
+	public static TextureRegion egg2 = loadTexture("eggs-2.png");
 	public static TextureRegion bricks = loadTexture("bricks.png");
 	
 	//debug

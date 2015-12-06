@@ -9,7 +9,8 @@ public class RandomTexture {
 	public static RandomTexture groundObstacle = new RandomTexture(new TextureRegion[]{
 		Textures.poop,
 		Textures.bricks, 
-		Textures.egg
+		Textures.egg,
+		//Textures.egg2
 	});
 	
 	public static RandomTexture clouds = new RandomTexture(new TextureRegion[]{
