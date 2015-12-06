@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -162,7 +163,53 @@ public class GameScreen implements Screen {
 		
 		batch.begin();
 		font.draw(batch, "Score: " + (int)(score), Gdx.graphics.getWidth() * 0.2f, minY + 50);
+		
+		float barX = Gdx.graphics.getWidth() * 0.3f;
+		float barHeightSpacing = Gdx.graphics.getWidth() * 0.01f;
+		float barWidth = Gdx.graphics.getWidth() * 0.4f;
+		batch.draw(Textures.waterBar, barX, minY + barHeightSpacing, barWidth, barHeight - barHeightSpacing * 2);
 		batch.end();
+		
+		int numDroplets = 10;
+		float dropletWidth = barWidth * 0.07f;
+		float dropletSpacing = (barWidth - numDroplets * dropletWidth) / (numDroplets + 1);
+		
+		float dropletX = barX + dropletSpacing;
+		float dropletY = minY + 2 * barHeightSpacing;
+		float dropletHeight = barHeight - 4 * barHeightSpacing;
+		
+		Gdx.gl20.glEnable(GL20.GL_SCISSOR_TEST);
+		
+		int waterPerDroplet = maxWater / numDroplets;
+		int waterDraw = water;
+		
+		for(int i = 0; i < numDroplets; i++) {
+			Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)dropletHeight);
+			batch.begin();
+			batch.draw(Textures.waterEmpty, dropletX, dropletY, dropletWidth, dropletHeight);
+			batch.end();
+			
+			float fullPercentage = Math.min(1, (float)waterDraw / (float)waterPerDroplet);
+			System.out.println(fullPercentage + ", " + waterDraw + ", " + waterPerDroplet);
+			
+			Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)(dropletHeight*fullPercentage));
+			batch.begin();
+			batch.draw(Textures.waterFull, dropletX, dropletY, dropletWidth, dropletHeight);
+			batch.end();
+			
+			dropletX += dropletWidth + dropletSpacing;
+			
+			waterDraw -= waterPerDroplet;
+			if(waterDraw < 0) {
+				waterDraw = 0;
+			}
+		}
+		
+		Gdx.gl20.glDisable(GL20.GL_SCISSOR_TEST);
+		
+		//TODO: Scissor to window?
+		
+		
 	}
 	
 	public void updateEntityList(ArrayList<Entity> entities, float dt) {

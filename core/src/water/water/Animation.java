@@ -9,7 +9,7 @@ public class Animation {
 	public static Animation playerRunShoot = new Animation("player-run-shoot.png", 32, 32, playerRunFrameDelay);
 	public static Animation waterItem = new Animation("platform.png", 16, 32, 0.1f);
 	public static Animation flyingGoose = new Animation("flying_goose.png", 90, 32, 0.1f);
-	public static Animation runningGoose = new Animation("goose_run.png", 90, 32, 0.1f);
+	public static Animation runningGoose = new Animation("goose_run.png", 90, 32, 0.05f);
 	
 	private TextureRegion[] frames;
 	public float anim = 0;

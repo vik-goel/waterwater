@@ -12,11 +12,15 @@ public class Goose extends Entity {
 	
 	private State state;
 	
+	public Goose() {
+		animation = new Animation(Animation.runningGoose);
+	}
+	
 	public Goose init(float x, float y) {
 		float width = Gdx.graphics.getWidth() * 0.3f;
 		float height = Util.getHeight(width, Animation.runningGoose.getRegion());
 		
-		init(x + width * 0.5f, y + height * 0.5f, width, height, Animation.runningGoose);
+		init(x + width * 0.5f, y + height * 0.5f, width, height, animation);
 		
 		collideX = drawWidth * 0.02f;
 		collideWidth *= 0.27f;

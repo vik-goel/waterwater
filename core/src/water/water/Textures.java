@@ -24,6 +24,10 @@ public class Textures {
 	public static TextureRegion egg2 = loadTexture("eggs-2.png");
 	public static TextureRegion bricks = loadTexture("bricks.png");
 	
+	public static TextureRegion waterEmpty = loadTexture("water-empty.png");
+	public static TextureRegion waterFull = loadTexture("water-full.png");
+	public static TextureRegion waterBar = loadTexture("water-bar.png");
+	
 	//debug
 	public static TextureRegion arrow = loadTexture("arrow.png");
 	
