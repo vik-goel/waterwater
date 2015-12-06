@@ -7,12 +7,11 @@ import water.water.MyGame;
 
 public class HtmlLauncher extends GwtApplication {
 
-        @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
+        	GwtApplicationConfiguration config = new GwtApplicationConfiguration(1280, 720);
+        	return config;
         }
 
-        @Override
         public ApplicationListener getApplicationListener () {
                 return new MyGame();
         }

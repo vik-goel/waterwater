@@ -1,11 +1,12 @@
 package water.water;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity {
 
 	public Player(float x, float y) {
-		super(x, y, 250, 250, Animation.playerRun);
+		super(x, y, Gdx.graphics.getHeight() * 0.25f, Gdx.graphics.getHeight() * 0.25f, Animation.playerRunNormal);
 		
 		collideX = collideHeight * -0.1f;
 		collideY = collideHeight * -0.1f;
@@ -14,23 +15,71 @@ public class Player extends Entity {
 		collideHeight *= 0.7f;
 	}
 	
+	public float stepGravity(float dt) {
+		float gravity = dy > 0 ? GRAVITY : 2f * GRAVITY;
+		
+		float my = dy * dt - 0.5f * gravity * dt * dt;
+		dy -= gravity * dt;
+		return my;
+	}
+	
 	public void draw(float dt) {
 		super.draw(dt);
 		
-		if(game.input.jump() && onGround()) {
-			dy += 550;
+		dx *= Math.pow(Math.E, -2 * dt);
+		dy *= Math.pow(Math.E, -1.2 * dt);
+		
+		if(animation == Animation.playerRunNormal) {
+			Animation.playerRunShoot.anim = Animation.playerRunNormal.anim;
 		}
-
-		move(game.scrollX * dt, stepGravity(dt));
+		else if(animation == Animation.playerRunShoot) {
+			Animation.playerRunNormal.anim = Animation.playerRunShoot.anim;
+		}
+		
+		boolean onGround = onGround();
 		
 		Vector2 shootTarget = game.input.shoot();
+		boolean shooting = shootTarget != null;
 		
-		if(shootTarget != null) {
-			shoot(x, y, shootTarget.x, shootTarget.y);
+		if(game.input.jump() && onGround()) {
+			dy += 650;
+		}
+
+		move((dx + game.dCameraX) * dt, stepGravity(dt));
+		
+		if(shooting) {
+			shoot(x + drawWidth * 0.2f, y + drawHeight * 0.1f, shootTarget.x, shootTarget.y);
 		}
 		
 		if (y + drawHeight * 0.5f < 0) {
 			game.die();
+		}
+		
+		if(onGround) {
+			if (shooting) {
+				animation = Animation.playerRunShoot;
+			} else {
+				animation = Animation.playerRunNormal;
+			}
+		} else {
+			animation = null;
+			
+			if(shooting) {
+				tex = Textures.playerJumpShoot;
+			} else {
+				tex = Textures.playerJumpShoot;
+			}
+		}
+		
+		if(x + drawWidth * 0.5f < game.cameraX) {
+			game.die();
+		}
+		if(x - drawWidth * 0.5f > game.cameraX + Gdx.graphics.getWidth()) {
+			x = game.cameraX + Gdx.graphics.getWidth() + drawWidth * 0.5f;
+		}
+		if(y + collideY + collideHeight * 0.5f > Gdx.graphics.getHeight()) {
+			y = Gdx.graphics.getHeight() - collideY - collideHeight * 0.5f;
+			dy = 0;
 		}
 	}
 	
@@ -38,29 +87,45 @@ public class Player extends Entity {
 		float deltaX = targetX - startX;
 		float deltaY = targetY - startY;
 		
-		if(deltaX < 0) {
-			dx *= -1;
-		}
 		float theta = (float) Math.atan2(deltaY, deltaX);
 		
-		
-		float v = 750;
-		float dx = (float) (v*Math.cos(theta)) + game.scrollX;
-		float dy = (float) (v*Math.sin(theta));
+		float v = Gdx.graphics.getWidth() * 0.6f;
+		float dx = (float) (v * Math.cos(theta)) + game.dCameraX;
+		float dy = (float) (v * Math.sin(theta));
 		
 		float spawnRadius = 5;
+	
+		int particlesToSpawn = Math.min(30, game.water);
 		
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < particlesToSpawn; i++) {
 			float spawnAngle = (float)(random.nextFloat() * Math.PI * 2);
 			float spawnChangeX = (float)(Math.cos(spawnAngle) * spawnRadius);
 			float spawnChangeY = (float)(Math.sin(spawnAngle) * spawnRadius);
 			
-			game.addParticle(new Water(startX + spawnChangeX, startY + spawnChangeY, dx, dy));
+			game.addParticle(Pool.water.get().init(startX + spawnChangeX, startY + spawnChangeY, dx, dy));
 		}
+		
+		game.water -= particlesToSpawn;
+		
+		float totalDx = particlesToSpawn * dx;
+		float totalDy = particlesToSpawn * dy;
+		
+		if(totalDx > 0) {
+			this.dx -= 0.00008f * totalDx;
+		}
+		else {
+			this.dx -= 0.0008f * totalDx;
+		}
+		
+		//0.00125
+		this.dy -= 0.002f * totalDy;
+		
+		System.out.println("Water-: " + game.water);
 	}
 	
 	public boolean onGround() {
-		return checkCollisions(0, -0.1f) != null;
+		Entity collision = checkCollisions(0, -1f);
+		return collision != null && collision instanceof Platform && !((Platform)collision).dieOnHit;
 	}
 	
 	public boolean move(float mx, float my) {
@@ -96,18 +161,22 @@ public class Player extends Entity {
 			y += my;
 			return true;
 		} else {
-			if(mx != 0) {
-				dx = 0;
+			if(!collision.playerHit()) {
+				if(mx != 0) {
+					dx = 0;
+				}
+				else if(my != 0) {
+					dy = 0;
+				}
+				
+				if(collision instanceof Platform && ((Platform)collision).dieOnHit) {
+					game.die();
+				}
+				
+				return false;
+			} else {
+				return true;
 			}
-			else if(my != 0) {
-				dy = 0;
-			}
-			
-			if(collision instanceof Platform && ((Platform)collision).dieOnHit) {
-				game.die();
-			}
-			
-			return false;
 		}
 	}
 

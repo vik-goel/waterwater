@@ -25,7 +25,6 @@ public class ParticleGrid {
 		float totalWidth = Gdx.graphics.getWidth() + xOffset * -2;
 		float totalHeight = Gdx.graphics.getHeight() * 2;
 		
-		//cellSize = Gdx.graphics.getHeight() * 0.025f;
 		cellSize = Gdx.graphics.getHeight() * 0.0125f;
 		
 		int cellCols = (int)Math.ceil(totalWidth / cellSize);
@@ -45,7 +44,7 @@ public class ParticleGrid {
 	}
 	
 	public void draw(float dt) {
-		xOffset += game.scrollX * dt;
+		xOffset += game.dCameraX * dt;
 		
 		ArrayList<Entity> particles = game.particles;
 		

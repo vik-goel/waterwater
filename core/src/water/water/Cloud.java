@@ -1,12 +1,15 @@
 package water.water;
 
-public class Cloud extends Entity {
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-	public Cloud(float x, float y) {
-		super(x, y, 0, 0, RandomTexture.clouds.getRegion());
+public class Cloud extends Entity {
+	
+	public Cloud init(float x, float y) {
+		TextureRegion tex =  RandomTexture.clouds.getRegion();
 		drawWidth = tex.getRegionWidth();
 		drawHeight = tex.getRegionHeight();
-		this.x += drawWidth * 0.5f;
+		init(x + drawWidth * 0.5f, y, drawWidth, drawHeight, tex);
+		return this;
 	}
 	
 	public boolean collidesWith(Entity other) {

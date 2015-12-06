@@ -1,9 +1,8 @@
 package water.water;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -27,7 +26,7 @@ public class DeathScreen implements Screen {
 		font.draw(batch, "Press space to restart", 200, 200);
 		batch.end();
 		
-		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.justTouched()) {
 			myGame.setScreen(new GameScreen(myGame));
 		}
 	}

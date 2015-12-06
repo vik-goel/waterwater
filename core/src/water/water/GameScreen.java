@@ -15,13 +15,18 @@ public class GameScreen implements Screen {
 	
 	public Input input;
 	
-	public float scrollX = 500;
+	public float dCameraX = 0.4f * Gdx.graphics.getWidth();
 	public float cameraX = 0;
 	
 	public ParticleGrid particleGrid;
 	public LevelSpawner levelSpawner;
 	
 	public MyGame myGame;
+	
+	public Player player;
+	
+	public int maxWater = 10000;
+	public int water;
 	
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -32,14 +37,7 @@ public class GameScreen implements Screen {
 		
 		particleGrid = new ParticleGrid(this);
 		
-		addObject(new Platform(0, 0, Gdx.graphics.getWidth(), 50, false, Textures.grass));
-		//addObject(new Platform(750, 150));
-		//addObject(new Platform(1100, 250));
-		//addObject(new Platform(1300, 0, 50, 5000));
-		
-		addObject(new Goose(1000, 50));
-		
-		addObject(new Player(120, 400));
+		addObject(player = new Player(Gdx.graphics.getWidth() * 0.33f, 0.5f * Gdx.graphics.getHeight()));
 		
 		levelSpawner = new LevelSpawner(this);
 		
@@ -49,17 +47,59 @@ public class GameScreen implements Screen {
 			input = new KeyboardInput(this);
 		} else {
 			System.err.println("input not implemented yet");
+			input = new KeyboardInput(this);
 		}
+		
+		water = maxWater;
+		
+//		for(int i = 0; i < 100; i++) {
+//			levelSpawner.spawn(0.1f);
+//			cameraX += dCameraX * 0.02f;
+//		}
+//		
+//		player.removed = true;
+//		dCameraX = 0;
 	}
 	
 	public void addObject(Entity e) {
-		if(e instanceof Cloud) {
-			clouds.add(e);
-		} else {
+		if(e instanceof Platform) {
+			if(((Platform)e).dieOnHit) {
+				e.drawOrder = Entity.DRAWORDER_GROUND_OBSTACLE;
+			} else {
+				e.drawOrder = Entity.DRAWORDER_GROUND;
+			}
+		}
+		else if(e instanceof Goose) {
+			e.drawOrder = Entity.DRAWORDER_GOOSE;
+		}
+		else if (e instanceof Player) {
+			e.drawOrder = Entity.DRAWORDER_PLAYER;
+		}
+		else if(e instanceof WaterItem) {
+			e.drawOrder = Entity.DRAWORDER_WATER_ITEM;
+		}
+		
+		boolean added = false;
+		
+		for(int i = 0; i < objects.size(); i++) {
+			Entity test = objects.get(i);
+			
+			if(test.drawOrder >= e.drawOrder) {
+				objects.add(i, e);
+				added = true;
+				break;
+			}
+		}
+		
+		if(!added) {
 			objects.add(e);
 		}
 		
-		
+		entities.add(e);
+	}
+	
+	public void addCloud(Entity e) {
+		clouds.add(e);
 		entities.add(e);
 	}
 	
@@ -72,15 +112,14 @@ public class GameScreen implements Screen {
 		final float maxDt = 5;
 		float dt = Math.min(maxDt, Gdx.graphics.getDeltaTime());
 		
-		cameraX += scrollX * dt;
+		cameraX += dCameraX * dt;
 		
+		levelSpawner.spawn(dt);
 		particleGrid.draw(dt);
 		
 		updateEntityList(clouds, dt);
 		updateEntityList(particles, dt);
 		updateEntityList(objects, dt);
-		
-		levelSpawner.spawn(dt);
 	}
 	
 	public void updateEntityList(ArrayList<Entity> entities, float dt) {
@@ -89,11 +128,28 @@ public class GameScreen implements Screen {
 			
 			if(e.removed) {
 				entities.remove(i--);
-				particles.remove(e);
-				objects.remove(e);
-				clouds.remove(e);
 				
-				//TODO: Keep a free list of removed entities
+				if (e instanceof Water) {
+					Pool.water.put(e);
+					particles.remove(e);
+				}
+				else if (e instanceof Cloud) {
+					Pool.cloud.put(e);
+					clouds.remove(e);
+				}
+				else {
+					objects.remove(e);
+					if (e instanceof Goose) {
+						Pool.goose.put(e);
+					}
+					else if (e instanceof Platform) {
+						Pool.platform.put(e);
+					}
+					
+					else if (e instanceof WaterItem) {
+						Pool.waterItem.put(e);
+					}
+				}
 			} else {
 				e.draw(dt);	
 			}

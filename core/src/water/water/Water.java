@@ -1,5 +1,6 @@
 package water.water;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -7,20 +8,20 @@ import com.badlogic.gdx.math.Vector2;
 public class Water extends Entity {
 	
 	public float ddx, ddy;
-	float dAlpha = 0;
+	float dAlpha;
 	
 	Vector2 pastPos = new Vector2();
 	Color[] colors = new Color[3];
 	
 	boolean justSpawned = true;
 	
-	public Water(float x, float y, float dx, float dy) {
-		super(x, y, getDim(), getDim(), Textures.water);
+	public Entity init(float x, float y, float dx, float dy) {
+		init(x, y, getDim(), getDim(), Textures.water);
+		
+		ddx = ddy = dAlpha = 0;
+		
 		this.dx = dx;
 		this.dy = dy;
-		
-		//this.dx *= 1 + (random.nextFloat() - 0.5f) * 0.15f;
-		//this.dy *= 1 + (random.nextFloat() - 0.5f) * 0.15f;
 		
 		collideWidth *= 0.1f;
 		collideHeight *= 0.1f;
@@ -32,16 +33,15 @@ public class Water extends Entity {
 		}
 		
 		draw(random.nextFloat() * 0.15f);
+		
+		return this;
 	}
 	
 	private static float getDim() {
-		return random.nextFloat() * 15 + 10;
+		return random.nextFloat() * 0.011f * Gdx.graphics.getWidth() + 0.008f * Gdx.graphics.getWidth();
 	}
 
 	public void draw(float dt) {
-		//super.draw(dt);
-		
-		
 		float ddAlpha = -0.33f;
 		alpha += dAlpha * dt + 0.5f * ddAlpha * dt * dt;
 		dAlpha += ddAlpha * dt;

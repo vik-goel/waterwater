@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class RandomTexture {
 
 	public static RandomTexture groundObstacle = new RandomTexture(new TextureRegion[]{
-		Textures.loadTexture("poop.png"),
-		Textures.loadTexture("egg.png"),
-		Textures.loadTexture("bricks.png"),
+		Textures.poop,
+		Textures.bricks, 
+		Textures.egg
 	});
 	
 	public static RandomTexture clouds = new RandomTexture(new TextureRegion[]{
