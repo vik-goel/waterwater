@@ -42,9 +42,6 @@ public class Water extends Entity {
 		//super.draw(dt);
 		
 		
-		
-		
-		
 		float ddAlpha = -0.33f;
 		alpha += dAlpha * dt + 0.5f * ddAlpha * dt * dt;
 		dAlpha += ddAlpha * dt;

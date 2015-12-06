@@ -14,7 +14,7 @@ public abstract class Entity {
 	public static SpriteBatch batch = new SpriteBatch();
 	public static ShapeRenderer sr = new ShapeRenderer();
 	public static Random random = new Random();
-	public static MyGame game;
+	public static GameScreen game;
 	
 	public float x, y;
 	public float dx, dy;

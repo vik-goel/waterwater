@@ -9,6 +9,7 @@ public class Textures {
 	public static TextureRegion platform = loadTexture("platform.png");
 	public static TextureRegion player = platform;
 	public static TextureRegion water = loadTexture("water.png");
+	public static TextureRegion egg = loadTexture("egg_1.jpg");
 	
 	//debug
 	public static TextureRegion arrow = loadTexture("arrow.png");

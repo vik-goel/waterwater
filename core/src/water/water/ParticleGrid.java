@@ -3,7 +3,6 @@ package water.water;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
@@ -13,12 +12,12 @@ public class ParticleGrid {
 	ShapeRenderer sr;
 	
 	Cell[][] cells;
-	MyGame game;
+	GameScreen game;
 	
 	float cellSize;
 	float xOffset;
 	
-	public ParticleGrid(MyGame game) {
+	public ParticleGrid(GameScreen game) {
 		this.game = game;
 		
 		xOffset = -Gdx.graphics.getWidth();
@@ -90,7 +89,7 @@ public class ParticleGrid {
 					int numParticles = cell.particles.size();
 					
 					if(numParticles > 0) {
-						float alpha = 0.1f;
+						//float alpha = 0.1f;
 						float grey = Math.max(0, 1 - numParticles * 0.2f);
 						
 						sr.begin(ShapeType.Filled);

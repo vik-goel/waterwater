@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Input {
 
 	private Vector2 shootVec = new Vector2();
-	private MyGame game;
+	private GameScreen game;
 	
-	public Input(MyGame game) {
+	public Input(GameScreen game) {
 		this.game = game;
 	}
 	

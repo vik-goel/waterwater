@@ -35,7 +35,7 @@ public class Player extends Entity {
 		
 		
 		float v = 750;
-		float dx = (float) (v*Math.cos(theta));
+		float dx = (float) (v*Math.cos(theta)) + game.scrollX;
 		float dy = (float) (v*Math.sin(theta));
 		
 		float spawnRadius = 5;
@@ -91,6 +91,10 @@ public class Player extends Entity {
 			}
 			else if(my != 0) {
 				dy = 0;
+			}
+			
+			if(collision instanceof Platform && ((Platform)collision).dieOnHit) {
+				game.die();
 			}
 			
 			return false;

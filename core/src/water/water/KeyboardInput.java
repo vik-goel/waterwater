@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 
 public class KeyboardInput extends Input {
 	
-	public KeyboardInput(MyGame game) {
+	public KeyboardInput(GameScreen game) {
 		super(game);
 	}
 	
