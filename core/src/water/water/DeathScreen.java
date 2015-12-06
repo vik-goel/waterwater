@@ -13,8 +13,14 @@ public class DeathScreen implements Screen {
 	
 	MyGame myGame;
 	
+	Button playAgain;
+	
 	public DeathScreen(MyGame myGame) {
 		this.myGame = myGame;
+		
+		float width = Gdx.graphics.getWidth() * 0.5f;
+		float height = Gdx.graphics.getHeight() * 0.1f;
+		playAgain = new Button((Gdx.graphics.getWidth() - width) * 0.5f, (Gdx.graphics.getHeight() - height) * 0.5f, width, height, Textures.playAgainButton);
 	}
 	
 	public void show() {
@@ -26,7 +32,11 @@ public class DeathScreen implements Screen {
 		font.draw(batch, "Press space to restart", 200, 200);
 		batch.end();
 		
-		if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.justTouched()) {
+		if(playAgain.draw(delta, batch)) {
+			myGame.setScreen(new GameScreen(myGame));
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			myGame.setScreen(new GameScreen(myGame));
 		}
 	}

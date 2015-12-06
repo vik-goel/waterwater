@@ -10,6 +10,7 @@ public class MyGame extends Game {
 	
 	public void create () {
 		setScreen(new GameScreen(this));
+		//setScreen(new DeathScreen(this));
 		batch = new SpriteBatch();
 	}
 	

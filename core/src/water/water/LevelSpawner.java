@@ -61,7 +61,7 @@ public class LevelSpawner {
 					shrubHeight = 125 + 50 * random.nextFloat();
 				}
 				
-				float shrubWidth = shrubHeight * ((float)tex.getRegionHeight() / (float)tex.getRegionWidth());
+				float shrubWidth = shrubHeight * ((float)tex.getRegionWidth() / (float)tex.getRegionHeight());
 				
 				game.addObject(Pool.platform.get().init(offscreenX, y * Gdx.graphics.getHeight(), shrubWidth, shrubHeight, true, tex, collideYC, collideHeightC, collideWidthC));
 				break;

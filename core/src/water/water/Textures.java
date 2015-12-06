@@ -14,6 +14,7 @@ public class Textures {
 	public static TextureRegion goose = loadTexture("platform.png");
 	public static TextureRegion grass = loadTexture("grass.png");
 	public static TextureRegion backdrop = loadTexture("backdrop.png");
+	public static TextureRegion playAgainButton = loadTexture("platform.png");
 	
 	public static TextureRegion poop = loadTexture("poop.png");
 	public static TextureRegion egg = loadTexture("egg.png");
