@@ -34,11 +34,15 @@ public class Textures {
 	public static TextureRegion loadTexture(String path) {
 		TextureRegion result = null;
 		
-		Texture texture = new Texture(path);
-		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		
-		result = new TextureRegion(texture);
+		try {
+			Texture texture = new Texture(path);
+			texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+			texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+			
+			result = new TextureRegion(texture);
+		} catch (Exception e) {
+			System.err.println("Failed to load texture from: " + path);
+		}
 		
 		return result;
 	}

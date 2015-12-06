@@ -190,7 +190,6 @@ public class GameScreen implements Screen {
 			batch.end();
 			
 			float fullPercentage = Math.min(1, (float)waterDraw / (float)waterPerDroplet);
-			System.out.println(fullPercentage + ", " + waterDraw + ", " + waterPerDroplet);
 			
 			Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)(dropletHeight*fullPercentage));
 			batch.begin();

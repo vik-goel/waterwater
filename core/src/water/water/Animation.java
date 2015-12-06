@@ -10,20 +10,25 @@ public class Animation {
 	public static Animation waterItem = new Animation("platform.png", 16, 32, 0.1f);
 	public static Animation flyingGoose = new Animation("flying_goose.png", 90, 32, 0.1f);
 	public static Animation runningGoose = new Animation("goose_run.png", 90, 32, 0.05f);
+	public static Animation idleGoose = new Animation("goose_idle.png", 90, 32, 0.05f);
 	
 	private TextureRegion[] frames;
 	public float anim = 0;
 	private float frameDelay;
 	
 	public Animation(String spriteSheetPath, int frameWidth, int frameHeight, float frameDelay) {
-		TextureRegion spriteSheet = Textures.loadTexture(spriteSheetPath);
-		frames = new TextureRegion[spriteSheet.getRegionWidth() / frameWidth];
-		
-		for(int i = 0; i < frames.length; i++) {
-			frames[i] = new TextureRegion(spriteSheet, i * frameWidth, 0, frameWidth, frameHeight);
+		try {
+			TextureRegion spriteSheet = Textures.loadTexture(spriteSheetPath);
+			frames = new TextureRegion[spriteSheet.getRegionWidth() / frameWidth];
+			
+			for(int i = 0; i < frames.length; i++) {
+				frames[i] = new TextureRegion(spriteSheet, i * frameWidth, 0, frameWidth, frameHeight);
+			}
+			
+			this.frameDelay = frameDelay;
+		} catch (Exception e) {
+			System.err.println("Failed to load animation from: " + spriteSheetPath);
 		}
-		
-		this.frameDelay = frameDelay;
 	}
 	
 	public Animation(Animation other) {

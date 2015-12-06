@@ -12,21 +12,26 @@ public class Goose extends Entity {
 	
 	private State state;
 	
+	Animation idleAnim, chaseAnim;
+	
 	public Goose() {
-		animation = new Animation(Animation.runningGoose);
+		idleAnim = new Animation(Animation.idleGoose);
+		chaseAnim = new Animation(Animation.runningGoose);
 	}
 	
 	public Goose init(float x, float y) {
 		float width = Gdx.graphics.getWidth() * 0.3f;
 		float height = Util.getHeight(width, Animation.runningGoose.getRegion());
 		
-		init(x + width * 0.5f, y + height * 0.5f, width, height, animation);
+		init(x + width * 0.5f, y + height * 0.5f, width, height, idleAnim);
 		
 		collideX = drawWidth * 0.02f;
 		collideWidth *= 0.27f;
 		collideHeight *= 0.5f;
 		
 		state = State.IDLE;
+		flipX = random.nextBoolean();
+		
 		return this;
 	}
 	
@@ -47,10 +52,12 @@ public class Goose extends Entity {
 	}
 	
 	private void chasingUpdate(float dt) {
+		flipX = false;
 		x += game.dCameraX * dt;
 	}
 	
 	private void flyingUpdate(float dt) {
+		flipX = true;
 		x += game.dCameraX * dt;
 		
 		float leftOffset = Gdx.graphics.getWidth() * 0.05f + (game.player.drawWidth + drawWidth) * 0.5f;
@@ -59,6 +66,8 @@ public class Goose extends Entity {
 			x -= dt * 700;
 		} else {
 			state = State.CHASING;
+			
+			animation = chaseAnim;
 			game.numGeeseChasing++;
 		}
 	}

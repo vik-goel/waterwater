@@ -73,7 +73,7 @@ public class LevelSpawner {
 				makeGround(offscreenX + Gdx.graphics.getWidth() * (0.15f + random.nextFloat() * 0.175f), 0);
 				break;
 			case 2: //goose
-				game.addObject(Pool.goose.get().init(offscreenX, groundHeight * 0.5f));
+				game.addObject(Pool.goose.get().init(offscreenX, -groundHeight * 0.5f));
 				break;
 			case 3: //water item
 				game.addObject(Pool.waterItem.get().init(offscreenX, 0.28f * Gdx.graphics.getHeight()));
