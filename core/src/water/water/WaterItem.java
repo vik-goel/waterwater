@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 public class WaterItem extends Entity {
 
 	public WaterItem() {
-		animation = new Animation(Animation.waterItem);
+		//animation = new Animation(Animation.waterItem);
 	}
 	
 	public WaterItem init(float x, float y) {
 		final float size = 0.07f * Gdx.graphics.getHeight();
-		init(x, y, size, size, animation);
+		init(x, y, size, size, Textures.waterItem);
 		return this;
 	}
 	

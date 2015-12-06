@@ -7,6 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
+import water.water.ParticleGrid.Cell;
 
 public abstract class Entity {
 
@@ -36,7 +39,8 @@ public abstract class Entity {
 	public float alpha; //TODO: Nothing uses alpha anymore?
 	public boolean seamlessTexture;
 
-	public int drawOrder = 0;
+	public int drawOrder;
+	public boolean flipX;
 	
 	public Entity(){}
 	
@@ -69,6 +73,8 @@ public abstract class Entity {
 		removed = false;
 		alpha = 1;
 		seamlessTexture = false;
+		flipX = false;
+		drawOrder = 0;
 		
 		return this;
 	}
@@ -90,7 +96,11 @@ public abstract class Entity {
 				batch.draw(tex.getTexture(), xStart, yStart, drawWidth, drawHeight, 0, 1, drawWidth / tex.getRegionWidth(), drawHeight / tex.getRegionHeight());
 			}
 			else {
-				batch.draw(tex, xStart, yStart, drawWidth, drawHeight);
+				if (flipX) {
+					batch.draw(tex, xStart, yStart, drawWidth * 0.5f, drawHeight * 0.5f, drawWidth, drawHeight, -1, 1, 0);
+				} else {
+					batch.draw(tex, xStart, yStart, drawWidth, drawHeight);
+				}
 			}
 			
 			
@@ -102,10 +112,13 @@ public abstract class Entity {
 //		sr.setColor(1, 0, 1, 1);
 //		sr.rect(x - drawWidth * 0.5f - game.cameraX, y - drawHeight * 0.5f, drawWidth, drawHeight);
 //		
+//		Gdx.gl20.glLineWidth(1);
 //		sr.setColor(0, 1, 1, 1);
 //		sr.rect(x + collideX - collideWidth * 0.5f - game.cameraX, y + collideY - collideHeight * 0.5f, collideWidth, collideHeight);
 //		
+//		
 //		sr.end();
+//		Gdx.gl20.glLineWidth(1);
 	}
 	
 	public Entity checkCollisions(float mx, float my) {
@@ -139,6 +152,31 @@ public abstract class Entity {
 		return Math.abs(xDiff) < radiusX && Math.abs(yDiff) < radiusY;
 	}
 	
+	public boolean isHitByWater() {
+		ParticleGrid grid = game.particleGrid;
+		
+		int gridMinX = (int)(((x - collideWidth * 0.5f) - grid.xOffset) / grid.cellSize);
+		int gridMinY = (int)((y - collideHeight * 0.5f) / grid.cellSize);
+		int gridWidth = (int)Math.ceil(collideWidth / grid.cellSize);
+		int gridHeight = (int)Math.ceil(collideHeight / grid.cellSize);
+		
+		int gridMaxX = gridMinX + gridWidth;
+		int gridMaxY = gridMinY + gridHeight;
+		
+		for(int i = gridMinX; i < gridMaxX; i++) {
+			for(int j = 0; j < gridMaxY; j++) {
+				if(i >= 0 && j >= 0 && i < grid.cells.length && j < grid.cells[0].length) {
+					Cell cell = grid.cells[i][j];
+					
+					if(!cell.particles.isEmpty()) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 	public boolean collidesWith(Entity other) {
 		return true;
