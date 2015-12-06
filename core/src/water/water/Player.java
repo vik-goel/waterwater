@@ -5,7 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Entity {
 
 	public Player(float x, float y) {
-		super(x, y, 100, 250, Textures.player);
+		super(x, y, 250, 250, Animation.playerRun);
+		
+		collideX = collideHeight * -0.1f;
+		collideY = collideHeight * -0.1f;
+		
+		collideWidth *= 0.25f;
+		collideHeight *= 0.7f;
 	}
 	
 	public void draw(float dt) {
@@ -21,6 +27,10 @@ public class Player extends Entity {
 		
 		if(shootTarget != null) {
 			shoot(x, y, shootTarget.x, shootTarget.y);
+		}
+		
+		if (y + drawHeight * 0.5f < 0) {
+			game.die();
 		}
 	}
 	

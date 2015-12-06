@@ -37,6 +37,8 @@ public class GameScreen implements Screen {
 		//addObject(new Platform(1100, 250));
 		//addObject(new Platform(1300, 0, 50, 5000));
 		
+		addObject(new Goose(1000, 50));
+		
 		addObject(new Player(120, 400));
 		
 		levelSpawner = new LevelSpawner(this);

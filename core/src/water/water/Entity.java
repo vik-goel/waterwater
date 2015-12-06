@@ -6,6 +6,7 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public abstract class Entity {
 
@@ -19,11 +20,18 @@ public abstract class Entity {
 	public float x, y;
 	public float dx, dy;
 	public float drawWidth, drawHeight;
+	public float collideX, collideY;
 	public float collideWidth, collideHeight;
 	public TextureRegion tex;
+	public Animation animation;
 	
 	public boolean removed = false;
 	public float alpha = 1;
+	
+	public Entity(float x, float y, float drawWidth, float drawHeight, Animation animation) {
+		this(x, y, drawWidth, drawHeight, animation.getRegion());
+		this.animation = animation;
+	}
 	
 	public Entity(float x, float y, float drawWidth, float drawHeight, TextureRegion tex) {
 		this.x = x;
@@ -37,12 +45,26 @@ public abstract class Entity {
 	}
 	
 	public void draw(float dt) {
+		if(animation != null) {
+			animation.update(dt);
+			tex = animation.getRegion();
+		}
+		
 		if(tex != null) {
 			batch.begin();
 			batch.setColor(1, 1, 1, alpha);
 			batch.draw(tex, x - drawWidth * 0.5f - game.cameraX, y - drawHeight * 0.5f, drawWidth, drawHeight);
 			batch.end();
 		}
+		
+//		sr.begin(ShapeType.Line);
+//		sr.setColor(1, 0, 1, 1);
+//		sr.rect(x - drawWidth * 0.5f - game.cameraX, y - drawHeight * 0.5f, drawWidth, drawHeight);
+//		
+//		sr.setColor(0, 1, 1, 1);
+//		sr.rect(x + collideX - collideWidth * 0.5f - game.cameraX, y + collideY - collideHeight * 0.5f, collideWidth, collideHeight);
+//		
+//		sr.end();
 	}
 	
 	public float stepGravity(float dt) {
@@ -76,8 +98,8 @@ public abstract class Entity {
 		float radiusX = (collideWidth + e.collideWidth) * 0.5f;
 		float radiusY = (collideHeight + e.collideHeight) * 0.5f;
 		
-		float xDiff = e.x - x;
-		float yDiff = e.y - y;
+		float xDiff = (e.x + e.collideX) - (x + collideX);
+		float yDiff = (e.y + e.collideY) - (y + collideY);
 		
 		return Math.abs(xDiff) < radiusX && Math.abs(yDiff) < radiusY;
 	}
