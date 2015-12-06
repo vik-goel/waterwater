@@ -14,6 +14,7 @@ public abstract class Entity {
 	public static final int DRAWORDER_GROUND_OBSTACLE = 10;
 	public static final int DRAWORDER_GOOSE = 25;
 	public static final int DRAWORDER_WATER_ITEM = 50;
+	public static final int DRAWORDER_POOP = 75;
 	public static final int DRAWORDER_PLAYER = 100;
 	
 	public static final float GRAVITY = 9.8f * 0.14f * Gdx.graphics.getHeight();

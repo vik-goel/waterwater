@@ -11,10 +11,10 @@ public class LevelSpawner {
 	private Random random = new Random();
 	
 	private float obstacleDelay = 0.2f;
-	
 	private float cloudDelay = 0;
-	private Platform ground;
+	private float flyingGooseDelay = 0.5f;
 	
+	private Platform ground;
 	private float groundHeight;
 	
 	public LevelSpawner(GameScreen game) {
@@ -31,6 +31,7 @@ public class LevelSpawner {
 	public void spawn(float dt) {
 		obstacleDelay -= dt;
 		cloudDelay -= dt;
+		flyingGooseDelay -= dt;
 		
 		float offscreenX = game.cameraX + Gdx.graphics.getWidth();
 		
@@ -83,6 +84,13 @@ public class LevelSpawner {
 			float cloudY = Gdx.graphics.getHeight() * (0.7f + random.nextFloat() * 0.25f);
 			game.addCloud(Pool.cloud.get().init(offscreenX, cloudY));
 			cloudDelay = 1.1f + random.nextFloat() * 0.7f;
+		}
+		
+		if(flyingGooseDelay <= 0) {
+			float gooseY = Gdx.graphics.getHeight() * (0.7f + random.nextFloat() * 0.15f);
+			game.addObject(Pool.flyingGoose.get().init(offscreenX, gooseY));
+			
+			flyingGooseDelay = 1.4f + random.nextFloat() * 2f;
 		}
 	}
 	

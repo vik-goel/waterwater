@@ -52,6 +52,7 @@ public class Goose extends Entity {
 			x -= dt * 700;
 		} else {
 			state = State.CHASING;
+			game.numGeeseChasing++;
 		}
 	}
 	

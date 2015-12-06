@@ -9,6 +9,8 @@ public class Pool<T> {
 	public static Pool<Platform> platform = new Pool<Platform>(20, new Platform());
 	public static Pool<Cloud> cloud = new Pool<Cloud>(20, new Cloud());
 	public static Pool<WaterItem> waterItem = new Pool<WaterItem>(20, new WaterItem());
+	public static Pool<FlyingGoose> flyingGoose = new Pool<FlyingGoose>(20, new FlyingGoose());
+	public static Pool<Poop> poop = new Pool<Poop>(20, new Poop());
 	
 	private ArrayList<T> objects;
 	private T t;

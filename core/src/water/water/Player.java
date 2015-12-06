@@ -95,6 +95,7 @@ public class Player extends Entity {
 		
 		float spawnRadius = 5;
 	
+		//TODO: The maximum particle spawn limit should be a function of dt
 		int particlesToSpawn = Math.min(30, game.water);
 		
 		for(int i = 0; i < particlesToSpawn; i++) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class GameScreen implements Screen {
 
@@ -28,8 +29,24 @@ public class GameScreen implements Screen {
 	public int maxWater = 10000;
 	public int water;
 	
+	public int numGeeseChasing;
+	public float score;
+	
+	public BitmapFont font;
+	
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
+		
+		if(Gdx.app.getType() == ApplicationType.Desktop || 
+		   Gdx.app.getType() == ApplicationType.WebGL ||
+		   Gdx.app.getType() == ApplicationType.Applet) {
+				input = new KeyboardInput(this);
+		} else {
+			System.err.println("input not implemented yet");
+			input = new KeyboardInput(this);
+		}
+		
+		font = new BitmapFont();
 	}
 	
 	public void show() {
@@ -41,16 +58,9 @@ public class GameScreen implements Screen {
 		
 		levelSpawner = new LevelSpawner(this);
 		
-		if(Gdx.app.getType() == ApplicationType.Desktop || 
-		   Gdx.app.getType() == ApplicationType.WebGL ||
-		   Gdx.app.getType() == ApplicationType.Applet) {
-			input = new KeyboardInput(this);
-		} else {
-			System.err.println("input not implemented yet");
-			input = new KeyboardInput(this);
-		}
-		
 		water = maxWater;
+		score = 0;
+		numGeeseChasing = 1;
 		
 //		for(int i = 0; i < 100; i++) {
 //			levelSpawner.spawn(0.1f);
@@ -77,6 +87,12 @@ public class GameScreen implements Screen {
 		}
 		else if(e instanceof WaterItem) {
 			e.drawOrder = Entity.DRAWORDER_WATER_ITEM;
+		}
+		else if(e instanceof FlyingGoose) {
+			e.drawOrder = Entity.DRAWORDER_GOOSE;
+		}
+		else if(e instanceof Poop) {
+			e.drawOrder = Entity.DRAWORDER_POOP;
 		}
 		
 		boolean added = false;
@@ -109,6 +125,8 @@ public class GameScreen implements Screen {
 	}
 
 	public void render(float delta) {
+		score += delta * numGeeseChasing;
+		
 		final float maxDt = 5;
 		float dt = Math.min(maxDt, Gdx.graphics.getDeltaTime());
 		
@@ -120,6 +138,10 @@ public class GameScreen implements Screen {
 		updateEntityList(clouds, dt);
 		updateEntityList(particles, dt);
 		updateEntityList(objects, dt);
+		
+		Entity.batch.begin();
+		font.draw(Entity.batch, "Score: " + (int)(score), 100, 100);
+		Entity.batch.end();
 	}
 	
 	public void updateEntityList(ArrayList<Entity> entities, float dt) {
@@ -148,6 +170,12 @@ public class GameScreen implements Screen {
 					
 					else if (e instanceof WaterItem) {
 						Pool.waterItem.put(e);
+					}
+					else if (e instanceof FlyingGoose) {
+						Pool.flyingGoose.put(e);
+					}
+					else if(e instanceof Poop) {
+						Pool.poop.put(e);
 					}
 				}
 			} else {

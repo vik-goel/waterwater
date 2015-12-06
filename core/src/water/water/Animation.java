@@ -8,6 +8,7 @@ public class Animation {
 	public static Animation playerRunNormal = new Animation("player-run-normal.png", 32, 32,playerRunFrameDelay);
 	public static Animation playerRunShoot = new Animation("player-run-shoot.png", 32, 32, playerRunFrameDelay);
 	public static Animation waterItem = new Animation("platform.png", 16, 32, 0.1f);
+	public static Animation flyingGoose = new Animation("platform.png", 16, 32, 0.1f);
 	
 	private TextureRegion[] frames;
 	public float anim = 0;
