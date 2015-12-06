@@ -2,8 +2,6 @@ package water.water;
 
 import com.badlogic.gdx.Gdx;
 
-import water.water.ParticleGrid.Cell;
-
 public class Goose extends Entity {
 
 	enum State {
@@ -12,13 +10,18 @@ public class Goose extends Entity {
 		IDLE
 	}
 	
-	private static float width = 0.27f * Gdx.graphics.getHeight();
-	private static float height = 0.27f * Gdx.graphics.getHeight();
-	
 	private State state;
 	
 	public Goose init(float x, float y) {
-		init(x + width * 0.5f, y + height * 0.5f, width, height, Textures.goose);
+		float width = Gdx.graphics.getWidth() * 0.3f;
+		float height = Util.getHeight(width, Animation.runningGoose.getRegion());
+		
+		init(x + width * 0.5f, y + height * 0.5f, width, height, Animation.runningGoose);
+		
+		collideX = drawWidth * 0.02f;
+		collideWidth *= 0.27f;
+		collideHeight *= 0.5f;
+		
 		state = State.IDLE;
 		return this;
 	}
