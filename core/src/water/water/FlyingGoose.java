@@ -41,7 +41,7 @@ public class FlyingGoose extends Entity {
 	}
 	
 	void setPoopDelay() {
-		poopDelay = random.nextFloat() * 0.7f + 0.1f;
+		poopDelay = random.nextFloat() * 0.9f + 0.25f;
 	}
 	
 	public boolean collidesWith(Entity other) {

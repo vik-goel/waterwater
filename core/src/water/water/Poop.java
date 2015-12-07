@@ -29,12 +29,14 @@ public class Poop extends Entity {
 		dy -= GRAVITY * dt;
 		
 		if(isHitByWater()) {
+			System.out.println("hit by water");
 			removed = true;
 		}
 	}
 	
 	public boolean playerHit() {
 		removed = true;
+		System.out.println("hit by player");
 		
 		PoopHitText poopText;
 		game.addObject(poopText = Pool.poopHitText.get().init());

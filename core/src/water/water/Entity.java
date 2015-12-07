@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import water.water.ParticleGrid.Cell;
 
@@ -154,16 +155,21 @@ public abstract class Entity {
 	public boolean isHitByWater() {
 		ParticleGrid grid = game.particleGrid;
 		
-		int gridMinX = (int)(((x - collideWidth * 0.5f) - grid.xOffset) / grid.cellSize);
-		int gridMinY = (int)((y - collideHeight * 0.5f) / grid.cellSize);
+		int gridMinX = (int)(((x + collideX - collideWidth * 0.5f) - grid.xOffset) / grid.cellSize);
+		int gridMinY = (int)((y + collideY - collideHeight * 0.5f) / grid.cellSize);
 		int gridWidth = (int)Math.ceil(collideWidth / grid.cellSize);
 		int gridHeight = (int)Math.ceil(collideHeight / grid.cellSize);
+		
+//		sr.begin(ShapeType.Filled);
+//		sr.setColor(1, 0, 1, 1);
+//		sr.rect(gridMinX * grid.cellSize + grid.xOffset - game.cameraX, gridMinY * grid.cellSize, gridWidth * grid.cellSize, gridHeight * grid.cellSize);
+//		sr.end();
 		
 		int gridMaxX = gridMinX + gridWidth;
 		int gridMaxY = gridMinY + gridHeight;
 		
 		for(int i = gridMinX; i < gridMaxX; i++) {
-			for(int j = 0; j < gridMaxY; j++) {
+			for(int j = gridMinY; j < gridMaxY; j++) {
 				if(i >= 0 && j >= 0 && i < grid.cells.length && j < grid.cells[0].length) {
 					Cell cell = grid.cells[i][j];
 					
