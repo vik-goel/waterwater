@@ -11,6 +11,7 @@ public class Pool<T> {
 	public static Pool<WaterItem> waterItem = new Pool<WaterItem>(20, new WaterItem());
 	public static Pool<FlyingGoose> flyingGoose = new Pool<FlyingGoose>(20, new FlyingGoose());
 	public static Pool<Poop> poop = new Pool<Poop>(20, new Poop());
+	public static Pool<PoopHitText> poopHitText = new Pool<PoopHitText>(20, new PoopHitText());
 	
 	private ArrayList<T> objects;
 	private T t;

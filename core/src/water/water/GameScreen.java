@@ -103,6 +103,9 @@ public class GameScreen implements Screen {
 		else if(e instanceof Poop) {
 			e.drawOrder = Entity.DRAWORDER_POOP;
 		}
+		else if(e instanceof PoopHitText) {
+			e.drawOrder = Entity.DRAWORDER_PLAYER_SPEECH;
+		}
 		
 		boolean added = false;
 		
@@ -263,6 +266,9 @@ public class GameScreen implements Screen {
 					}
 					else if(e instanceof Poop) {
 						Pool.poop.put(e);
+					}
+					else if(e instanceof PoopHitText) {
+						Pool.poopHitText.put(e);
 					}
 				}
 			} else {

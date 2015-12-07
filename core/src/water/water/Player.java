@@ -24,8 +24,6 @@ public class Player extends Entity {
 	}
 	
 	public void draw(float dt) {
-		super.draw(dt);
-		
 		dx *= Math.pow(Math.E, -2 * dt);
 		dy *= Math.pow(Math.E, -1.2 * dt);
 		
@@ -81,6 +79,8 @@ public class Player extends Entity {
 			y = Gdx.graphics.getHeight() - collideY - collideHeight * 0.5f;
 			dy = 0;
 		}
+		
+		super.draw(dt);
 	}
 	
 	public void shoot(float startX, float startY, float targetX, float targetY) {

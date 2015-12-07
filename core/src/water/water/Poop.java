@@ -35,6 +35,11 @@ public class Poop extends Entity {
 	
 	public boolean playerHit() {
 		game.die();
+		
+		if(game.life > 0) {
+			game.addObject(Pool.poopHitText.get().init());
+		}
+		
 		return false;
 	}
 	

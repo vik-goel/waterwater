@@ -25,6 +25,7 @@ public class Textures {
 	public static TextureRegion waterBar = loadTexture("water-bar.png");
 	
 	public static TextureRegion heart = loadTexture("heart.png");
+	public static TextureRegion poopHitText = loadTexture("poop-hit.png");
 	
 	public static TextureRegion jumpButtonRegular = loadTexture("jump-button-regular.png");
 	public static TextureRegion jumpButtonPressed = loadTexture("jump-button-pressed.png");

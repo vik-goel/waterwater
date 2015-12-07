@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import water.water.ParticleGrid.Cell;
 
@@ -19,6 +18,7 @@ public abstract class Entity {
 	public static final int DRAWORDER_WATER_ITEM = 50;
 	public static final int DRAWORDER_POOP = 75;
 	public static final int DRAWORDER_PLAYER = 100;
+	public static final int DRAWORDER_PLAYER_SPEECH = 125;
 	
 	public static final float GRAVITY = 9.8f * 0.14f * Gdx.graphics.getHeight();
 	
@@ -36,7 +36,7 @@ public abstract class Entity {
 	public Animation animation;
 	
 	public boolean removed;
-	public float alpha; //TODO: Nothing uses alpha anymore?
+	public float alpha;
 	public boolean seamlessTexture;
 
 	public int drawOrder;
@@ -87,7 +87,7 @@ public abstract class Entity {
 		
 		if(tex != null) {
 			batch.begin();
-			batch.setColor(1, 1, 1, alpha);
+			batch.setColor(1, 1, 1, Math.min(1, alpha));
 			
 			float xStart = x - drawWidth * 0.5f - game.cameraX;
 			float yStart = y - drawHeight * 0.5f;
