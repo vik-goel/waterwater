@@ -34,11 +34,11 @@ public class Poop extends Entity {
 	}
 	
 	public boolean playerHit() {
-		game.die();
+		removed = true;
 		
-		if(game.life > 0) {
-			game.addObject(Pool.poopHitText.get().init());
-		}
+		PoopHitText poopText;
+		game.addObject(poopText = Pool.poopHitText.get().init());
+		game.player.poopTime = poopText.alpha;
 		
 		return false;
 	}

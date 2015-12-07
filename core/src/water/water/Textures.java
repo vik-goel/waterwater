@@ -9,6 +9,7 @@ public class Textures {
 
 	public static TextureRegion playerJumpNormal = loadTexture("player-jump-normal.png");
 	public static TextureRegion playerJumpShoot = loadTexture("player-jump-shoot.png");
+	public static TextureRegion playerJumpPoop = loadTexture("player-jump-poopface.png");
 	public static TextureRegion water = loadTexture("water.png");
 	public static TextureRegion goose = loadTexture("platform.png");
 	public static TextureRegion grass = loadTexture("grass.png");

@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity {
 
+	public float poopTime;
+	
 	public Player(float x, float y) {
 		super(x, y, Gdx.graphics.getHeight() * 0.25f, Gdx.graphics.getHeight() * 0.25f, Animation.playerRunNormal);
 		
@@ -13,6 +15,8 @@ public class Player extends Entity {
 		
 		collideWidth *= 0.25f;
 		collideHeight *= 0.7f;
+		
+		poopTime = 0;
 	}
 	
 	public float stepGravity(float dt) {
@@ -24,6 +28,8 @@ public class Player extends Entity {
 	}
 	
 	public void draw(float dt) {
+		poopTime = Math.max(0, poopTime - dt);
+		
 		dx *= Math.pow(Math.E, -2 * dt);
 		dy *= Math.pow(Math.E, -1.2 * dt);
 		
@@ -54,7 +60,10 @@ public class Player extends Entity {
 		}
 		
 		if(onGround) {
-			if (shooting) {
+			if(poopTime > 0) {
+				animation = Animation.playerRunPoop;
+			}
+			else if (shooting) {
 				animation = Animation.playerRunShoot;
 			} else {
 				animation = Animation.playerRunNormal;
@@ -62,7 +71,10 @@ public class Player extends Entity {
 		} else {
 			animation = null;
 			
-			if(shooting) {
+			if(poopTime > 0) {
+				tex = Textures.playerJumpPoop;
+			}
+			else if(shooting) {
 				tex = Textures.playerJumpShoot;
 			} else {
 				tex = Textures.playerJumpShoot;
@@ -70,7 +82,7 @@ public class Player extends Entity {
 		}
 		
 		if(x + drawWidth * 0.5f < game.cameraX) {
-			game.die();
+			game.dieImmediate();
 		}
 		if(x - drawWidth * 0.5f > game.cameraX + Gdx.graphics.getWidth()) {
 			x = game.cameraX + Gdx.graphics.getWidth() + drawWidth * 0.5f;
@@ -84,6 +96,10 @@ public class Player extends Entity {
 	}
 	
 	public void shoot(float startX, float startY, float targetX, float targetY) {
+		if(poopTime > 0) {
+			return;
+		}
+		
 		float deltaX = targetX - startX;
 		float deltaY = targetY - startY;
 		
@@ -108,15 +124,15 @@ public class Player extends Entity {
 		
 		game.water -= particlesToSpawn;
 		
-		float totalDx = particlesToSpawn * dx;
+//		float totalDx = particlesToSpawn * dx;
 		float totalDy = particlesToSpawn * dy;
 		
-		if(totalDx > 0) {
-			this.dx -= 0.00008f * totalDx;
-		}
-		else {
-			this.dx -= 0.0008f * totalDx;
-		}
+//		if(totalDx > 0) {
+//			this.dx -= 0.00008f * totalDx;
+//		}
+//		else {
+//			this.dx -= 0.0008f * totalDx;
+//		}
 		
 		this.dy -= 0.002f * totalDy;
 	}

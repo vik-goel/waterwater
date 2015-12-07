@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 	
 	public Player player;
 	
-	public int maxWater = 10000;
+	public int maxWater = 6000;
 	public int water;
 	public int life;
 	
@@ -301,8 +301,12 @@ public class GameScreen implements Screen {
 		life--;
 		
 		if(life <= 0) {
-			myGame.setScreen(new DeathScreen(myGame));
+			dieImmediate();
 		}
+	}
+
+	public void dieImmediate() {
+		myGame.setScreen(new DeathScreen(myGame));
 	}
 
 }

@@ -103,9 +103,8 @@ public abstract class Entity {
 				}
 			}
 			
-			
-			
 			batch.end();
+			batch.setColor(1, 1, 1, 1);
 		}
 
 //		sr.begin(ShapeType.Line);

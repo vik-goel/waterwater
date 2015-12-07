@@ -105,7 +105,7 @@ public class LevelSpawner {
 			float gooseY = Gdx.graphics.getHeight() * (0.7f + random.nextFloat() * 0.15f);
 			game.addObject(Pool.flyingGoose.get().init(offscreenX, gooseY));
 			
-			flyingGooseDelay = 0.4f + random.nextFloat() * 1.5f;
+			flyingGooseDelay = random.nextFloat() * 0.8f + 0.3f;
 		}
 	}
 	

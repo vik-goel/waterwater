@@ -124,7 +124,7 @@ public class Water extends Entity {
 	}
 	
 	public boolean collidesWith(Entity other) {
-		return !(other instanceof Player);
+		return !(other instanceof Player || other instanceof WaterItem);
 	}
 
 }
