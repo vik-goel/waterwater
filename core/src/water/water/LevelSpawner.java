@@ -52,9 +52,6 @@ public class LevelSpawner {
 					collideHeightC = 0.75f;
 					y = 0.01f;
 				}
-				else if(tex == Textures.bricks) {
-					y = 0.025f;
-				}
 				else if(tex == Textures.egg) {
 					y = -0.015f;
 					collideHeightC = 0.5f;

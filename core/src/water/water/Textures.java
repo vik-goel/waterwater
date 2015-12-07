@@ -18,14 +18,13 @@ public class Textures {
 	public static TextureRegion poop = loadTexture("poop.png");
 	public static TextureRegion egg = loadTexture("egg.png");
 	public static TextureRegion egg2 = loadTexture("eggs-2.png");
-	public static TextureRegion bricks = loadTexture("bricks.png");
 	
 	public static TextureRegion waterEmpty = loadTexture("water-empty.png");
 	public static TextureRegion waterFull = loadTexture("water-full.png");
 	public static TextureRegion waterBar = loadTexture("water-bar.png");
 	
-	//debug
-	public static TextureRegion arrow = loadTexture("arrow.png");
+	public static TextureRegion jumpButtonRegular = loadTexture("jump-button-regular.png");
+	public static TextureRegion jumpButtonPressed = loadTexture("jump-button-pressed.png");
 	
 	public static TextureRegion loadTexture(String path) {
 		TextureRegion result = null;

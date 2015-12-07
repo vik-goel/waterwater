@@ -42,7 +42,7 @@ public class Player extends Entity {
 		boolean shooting = shootTarget != null;
 		
 		if(game.input.jump() && onGround()) {
-			dy += 650;
+			dy += 0.9f * Gdx.graphics.getHeight();
 		}
 
 		move((dx + game.dCameraX) * dt, stepGravity(dt));

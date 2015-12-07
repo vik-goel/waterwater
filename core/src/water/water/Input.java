@@ -1,6 +1,7 @@
 package water.water;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Input {
@@ -25,6 +26,10 @@ public abstract class Input {
 		} else {
 			return null;
 		}
+	}
+	
+	public void draw(float dt, SpriteBatch batch) {
+		
 	}
 	
 }

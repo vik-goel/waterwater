@@ -46,8 +46,7 @@ public class GameScreen implements Screen {
 		   Gdx.app.getType() == ApplicationType.Applet) {
 				input = new KeyboardInput(this);
 		} else {
-			System.err.println("input not implemented yet");
-			input = new KeyboardInput(this);
+			input = new TouchInput(this);
 		}
 		
 		font = new BitmapFont();
@@ -144,6 +143,7 @@ public class GameScreen implements Screen {
 		updateEntityList(objects, dt);
 		
 		drawGUIBar(dt);
+		input.draw(dt, Entity.batch);
 	}
 	
 	public void drawGUIBar(float dt) {

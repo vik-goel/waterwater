@@ -20,7 +20,7 @@ public class DeathScreen implements Screen {
 		
 		float width = Gdx.graphics.getWidth() * 0.5f;
 		float height = Gdx.graphics.getHeight() * 0.1f;
-		playAgain = new Button((Gdx.graphics.getWidth() - width) * 0.5f, (Gdx.graphics.getHeight() - height) * 0.5f, width, height, Textures.playAgainButton);
+		playAgain = new Button((Gdx.graphics.getWidth() - width) * 0.5f, (Gdx.graphics.getHeight() - height) * 0.5f, width, height, Textures.playAgainButton, Textures.playAgainButton);
 	}
 	
 	public void show() {
