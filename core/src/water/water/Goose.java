@@ -7,16 +7,18 @@ public class Goose extends Entity {
 	enum State {
 		CHASING,
 		FLYING,
-		IDLE
+		IDLE,
+		DEAD
 	}
 	
 	private State state;
 	
-	Animation idleAnim, chaseAnim;
+	Animation idleAnim, chaseAnim, deadAnim;
 	
 	public Goose() {
 		idleAnim = new Animation(Animation.idleGoose);
 		chaseAnim = new Animation(Animation.runningGoose);
+		deadAnim = new Animation(Animation.deathGoose);
 	}
 	
 	public Goose init(float x, float y) {
@@ -80,8 +82,17 @@ public class Goose extends Entity {
 		}
 	}
 	
+	public boolean playerHit() {
+		if(state == State.IDLE) {
+			state = State.DEAD;
+			animation = deadAnim;
+		}
+		
+		return true;
+	}
+	
 	public boolean collidesWith(Entity other) {
-		return !(other instanceof Player) || (other instanceof Player && state == State.IDLE);
+		return (state != State.DEAD) && (!(other instanceof Player) || (other instanceof Player && state == State.IDLE));
 	}
 
 }

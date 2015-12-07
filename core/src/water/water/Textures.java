@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Textures {
 
-	public static TextureRegion platform = loadTexture("platform.png");
 	public static TextureRegion playerJumpNormal = loadTexture("player-jump-normal.png");
 	public static TextureRegion playerJumpShoot = loadTexture("player-jump-shoot.png");
 	public static TextureRegion water = loadTexture("water.png");
@@ -15,9 +14,6 @@ public class Textures {
 	public static TextureRegion grass = loadTexture("grass.png");
 	public static TextureRegion backdrop = loadTexture("backdrop.png");
 	public static TextureRegion playAgainButton = loadTexture("platform.png");
-	
-	public static TextureRegion poopDrop = loadTexture("flying-poop.png");
-	public static TextureRegion waterItem = loadTexture("power-up.png");
 	
 	public static TextureRegion poop = loadTexture("poop.png");
 	public static TextureRegion egg = loadTexture("egg.png");

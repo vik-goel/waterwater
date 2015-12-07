@@ -118,10 +118,7 @@ public class Player extends Entity {
 			this.dx -= 0.0008f * totalDx;
 		}
 		
-		//0.00125
 		this.dy -= 0.002f * totalDy;
-		
-		System.out.println("Water-: " + game.water);
 	}
 	
 	public boolean onGround() {
