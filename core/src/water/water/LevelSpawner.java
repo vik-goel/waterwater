@@ -24,7 +24,7 @@ public class LevelSpawner {
 	}
 	
 	private void makeGround(float x, float width) {
-		ground = Pool.platform.get().init(x, 0, width, groundHeight, false, Textures.grass, -0.25f, 0.5f, 1);
+		ground = Pool.platform.get().init(x, 0, width, groundHeight, false, Textures.grass, -0.25f, 0.5f, 0, 1);
 		game.addObject(ground);
 	}
 	
@@ -44,27 +44,42 @@ public class LevelSpawner {
 			switch(random.nextInt(4)) {
 			case 0: //ground obstacle
 				TextureRegion tex = RandomTexture.groundObstacle.getRegion();
-				float collideYC = 0, collideHeightC = 1, collideWidthC = 1, y = 0.2f;
 				
-				float shrubHeight = 75 + 50 * random.nextFloat();
+				float collideYC = 0, collideHeightC = 1, collideXC = 0, collideWidthC = 1, y = 0.2f;
+				
+				float shrubHeight = 50;
 				
 				if(tex == Textures.poop) {
+					shrubHeight = 0.14f * Gdx.graphics.getHeight();
 					collideHeightC = 0.75f;
 					y = 0.01f;
+				}
+				else if(tex == Textures.poop2) {
+					shrubHeight = 0.69f * Gdx.graphics.getHeight();
+					y = -0.295f;
+					collideHeightC = 0.06f;
+					collideWidthC = 0.2f;
+					collideXC = 0.1f;
+					collideYC = 0.08f;
 				}
 				else if(tex == Textures.egg) {
 					y = -0.015f;
 					collideHeightC = 0.5f;
 					collideWidthC *= 0.7f;
-					shrubHeight = 125 + 50 * random.nextFloat();
+					shrubHeight = 0.17f * Gdx.graphics.getHeight();
 				}
 				else if(tex == Textures.egg2) {
-					
+					shrubHeight = 0.25f * Gdx.graphics.getHeight();
+					y = -0.075f;
+					collideWidthC = 0.48f;
+					collideHeightC = 0.3f;
+					collideYC = 0.05f;
+					collideXC = -0.05f;
 				}
 				
 				float shrubWidth = shrubHeight * ((float)tex.getRegionWidth() / (float)tex.getRegionHeight());
 				
-				game.addObject(Pool.platform.get().init(offscreenX, y * Gdx.graphics.getHeight(), shrubWidth, shrubHeight, true, tex, collideYC, collideHeightC, collideWidthC));
+				game.addObject(Pool.platform.get().init(offscreenX, y * Gdx.graphics.getHeight(), shrubWidth, shrubHeight, true, tex, collideYC, collideHeightC, collideXC, collideWidthC));
 				break;
 			case 1: //gap
 				makeGround(offscreenX + Gdx.graphics.getWidth() * (0.15f + random.nextFloat() * 0.175f), 0);

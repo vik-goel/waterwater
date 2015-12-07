@@ -20,8 +20,8 @@ public class GameScreen implements Screen {
 	
 	public Input input;
 	
-	public float dCameraX = 0.4f * Gdx.graphics.getWidth();
-	public float cameraX = 0;
+	public float dCameraX;
+	public float cameraX;
 	
 	public ParticleGrid particleGrid;
 	public LevelSpawner levelSpawner;
@@ -32,6 +32,7 @@ public class GameScreen implements Screen {
 	
 	public int maxWater = 10000;
 	public int water;
+	public int life;
 	
 	public int numGeeseChasing;
 	public float score;
@@ -64,6 +65,11 @@ public class GameScreen implements Screen {
 		water = maxWater;
 		score = 0;
 		numGeeseChasing = 1;
+		
+		cameraX = 0;
+		dCameraX = 0.4f * Gdx.graphics.getWidth();
+		
+		life = 3;
 		
 //		for(int i = 0; i < 100; i++) {
 //			levelSpawner.spawn(0.1f);
@@ -164,50 +170,64 @@ public class GameScreen implements Screen {
 		batch.begin();
 		font.draw(batch, "Score: " + (int)(score), Gdx.graphics.getWidth() * 0.2f, minY + 50);
 		
-		float barX = Gdx.graphics.getWidth() * 0.3f;
 		float barHeightSpacing = Gdx.graphics.getWidth() * 0.01f;
-		float barWidth = Gdx.graphics.getWidth() * 0.4f;
-		batch.draw(Textures.waterBar, barX, minY + barHeightSpacing, barWidth, barHeight - barHeightSpacing * 2);
-		batch.end();
-		
-		int numDroplets = 10;
-		float dropletWidth = barWidth * 0.07f;
-		float dropletSpacing = (barWidth - numDroplets * dropletWidth) / (numDroplets + 1);
-		
-		float dropletX = barX + dropletSpacing;
-		float dropletY = minY + 2 * barHeightSpacing;
 		float dropletHeight = barHeight - 4 * barHeightSpacing;
+		float dropletY = minY + 2 * barHeightSpacing;
 		
-		Gdx.gl20.glEnable(GL20.GL_SCISSOR_TEST);
-		
-		int waterPerDroplet = maxWater / numDroplets;
-		int waterDraw = water;
-		
-		for(int i = 0; i < numDroplets; i++) {
-			Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)dropletHeight);
-			batch.begin();
-			batch.draw(Textures.waterEmpty, dropletX, dropletY, dropletWidth, dropletHeight);
+		{ //draws the water bar
+			float barX = Gdx.graphics.getWidth() * 0.3f;
+			float barWidth = Gdx.graphics.getWidth() * 0.4f;
+			batch.draw(Textures.waterBar, barX, minY + barHeightSpacing, barWidth, barHeight - barHeightSpacing * 2);
 			batch.end();
 			
-			float fullPercentage = Math.min(1, (float)waterDraw / (float)waterPerDroplet);
+			int numDroplets = 10;
+			float dropletWidth = barWidth * 0.07f;
+			float dropletSpacing = (barWidth - numDroplets * dropletWidth) / (numDroplets + 1);
 			
-			Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)(dropletHeight*fullPercentage));
-			batch.begin();
-			batch.draw(Textures.waterFull, dropletX, dropletY, dropletWidth, dropletHeight);
-			batch.end();
+			float dropletX = barX + dropletSpacing;
 			
-			dropletX += dropletWidth + dropletSpacing;
+			Gdx.gl20.glEnable(GL20.GL_SCISSOR_TEST);
 			
-			waterDraw -= waterPerDroplet;
-			if(waterDraw < 0) {
-				waterDraw = 0;
+			int waterPerDroplet = maxWater / numDroplets;
+			int waterDraw = water;
+			
+			for(int i = 0; i < numDroplets; i++) {
+				Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)dropletHeight);
+				batch.begin();
+				batch.draw(Textures.waterEmpty, dropletX, dropletY, dropletWidth, dropletHeight);
+				batch.end();
+				
+				float fullPercentage = Math.min(1, (float)waterDraw / (float)waterPerDroplet);
+				
+				Gdx.gl20.glScissor((int)dropletX, (int)dropletY, (int)dropletWidth, (int)(dropletHeight*fullPercentage));
+				batch.begin();
+				batch.draw(Textures.waterFull, dropletX, dropletY, dropletWidth, dropletHeight);
+				batch.end();
+				
+				dropletX += dropletWidth + dropletSpacing;
+				
+				waterDraw -= waterPerDroplet;
+				if(waterDraw < 0) {
+					waterDraw = 0;
+				}
 			}
+			
+			Gdx.gl20.glDisable(GL20.GL_SCISSOR_TEST); //TODO: Scissor to window?
 		}
 		
-		Gdx.gl20.glDisable(GL20.GL_SCISSOR_TEST);
-		
-		//TODO: Scissor to window?
-		
+		{ //draws hearts
+			float minX = Gdx.graphics.getWidth() * 0.8f;
+			float heartHeight = dropletHeight;
+			float heartWidth = Util.getWidth(heartHeight, Textures.heart);
+			float heartSpacing = heartWidth * 0.1f;
+			
+			batch.begin();
+			for(int i = 0; i < life; i++) {
+				batch.draw(Textures.heart, minX, dropletY, heartWidth, heartHeight);
+				minX += heartSpacing + heartWidth;
+			}
+			batch.end();
+		}
 		
 	}
 	
@@ -272,7 +292,11 @@ public class GameScreen implements Screen {
 	}
 	
 	public void die() {
-		myGame.setScreen(new DeathScreen(myGame));
+		life--;
+		
+		if(life <= 0) {
+			myGame.setScreen(new DeathScreen(myGame));
+		}
 	}
 
 }

@@ -16,12 +16,15 @@ public class Textures {
 	public static TextureRegion playAgainButton = loadTexture("platform.png");
 	
 	public static TextureRegion poop = loadTexture("poop.png");
+	public static TextureRegion poop2 = loadTexture("poop2.png");
 	public static TextureRegion egg = loadTexture("egg.png");
 	public static TextureRegion egg2 = loadTexture("eggs-2.png");
 	
 	public static TextureRegion waterEmpty = loadTexture("water-empty.png");
 	public static TextureRegion waterFull = loadTexture("water-full.png");
 	public static TextureRegion waterBar = loadTexture("water-bar.png");
+	
+	public static TextureRegion heart = loadTexture("heart.png");
 	
 	public static TextureRegion jumpButtonRegular = loadTexture("jump-button-regular.png");
 	public static TextureRegion jumpButtonPressed = loadTexture("jump-button-pressed.png");

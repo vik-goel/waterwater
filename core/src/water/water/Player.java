@@ -169,6 +169,7 @@ public class Player extends Entity {
 				
 				if(collision instanceof Platform && ((Platform)collision).dieOnHit) {
 					game.die();
+					collision.removed = true;
 				}
 				
 				return false;

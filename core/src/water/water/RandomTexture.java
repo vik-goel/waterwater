@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class RandomTexture {
 
-	public static RandomTexture groundObstacle = new RandomTexture(new TextureRegion[]{
+	public static RandomTexture groundObstacle = new RandomTexture(new TextureRegion[] {
 		Textures.poop,
+		Textures.poop2,
 		Textures.egg,
-		//Textures.egg2
+		Textures.egg2,
 	});
 	
 	public static RandomTexture clouds = new RandomTexture(new TextureRegion[]{

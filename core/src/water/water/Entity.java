@@ -107,7 +107,7 @@ public abstract class Entity {
 			
 			batch.end();
 		}
-		
+
 //		sr.begin(ShapeType.Line);
 //		sr.setColor(1, 0, 1, 1);
 //		sr.rect(x - drawWidth * 0.5f - game.cameraX, y - drawHeight * 0.5f, drawWidth, drawHeight);

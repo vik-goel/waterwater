@@ -84,6 +84,7 @@ public class Goose extends Entity {
 	
 	public boolean playerHit() {
 		if(state == State.IDLE) {
+			game.die();
 			state = State.DEAD;
 			animation = deadAnim;
 		}
