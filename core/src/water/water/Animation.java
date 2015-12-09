@@ -17,6 +17,11 @@ public class Animation {
 	private TextureRegion[] frames;
 	public float anim = 0;
 	private float frameDelay;
+	private boolean looping = true;
+	
+	static {
+		deathGoose.looping = false;
+	}
 	
 	public Animation(String spriteSheetPath, int frameWidth, int frameHeight, float frameDelay) { 
 		try {
@@ -36,6 +41,7 @@ public class Animation {
 	public Animation(Animation other) {
 		this.frames = other.frames;
 		this.frameDelay = other.frameDelay;
+		this.looping = other.looping;
 	}
 	
 	public void update(float dt) {
@@ -44,7 +50,14 @@ public class Animation {
 	
 	public TextureRegion getRegion() {
 		int index = ((int)(anim / frameDelay));
-		return frames[index % frames.length];
+		
+		if(looping) {
+			index %= frames.length;
+		} else if (index >= frames.length) {
+			index = frames.length - 1;
+		}
+		
+		return frames[index];
 	}
 	
 }

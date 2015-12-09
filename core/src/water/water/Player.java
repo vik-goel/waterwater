@@ -105,7 +105,7 @@ public class Player extends Entity {
 		
 		float theta = (float) Math.atan2(deltaY, deltaX);
 		
-		float v = Gdx.graphics.getWidth() * 0.6f;
+		float v = Gdx.graphics.getHeight() * 1.06f;
 		float dx = (float) (v * Math.cos(theta)) + game.dCameraX;
 		float dy = (float) (v * Math.sin(theta));
 		
@@ -135,11 +135,6 @@ public class Player extends Entity {
 //		}
 		
 		this.dy -= 0.002f * totalDy;
-	}
-	
-	public boolean onGround() {
-		Entity collision = checkCollisions(0, -1f);
-		return collision != null && collision instanceof Platform && !((Platform)collision).dieOnHit;
 	}
 	
 	public boolean move(float mx, float my) {

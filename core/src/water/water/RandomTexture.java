@@ -14,11 +14,9 @@ public class RandomTexture {
 	});
 	
 	public static RandomTexture clouds = new RandomTexture(new TextureRegion[]{
-			Textures.loadTexture("cloud_1.png"),
-			Textures.loadTexture("cloud_2.png"),
-			Textures.loadTexture("cloud_3.png"),
-			Textures.loadTexture("cloud_4.png"),
-			Textures.loadTexture("cloud_5.png"),
+			Textures.loadTexture("cloud1.png"),
+			Textures.loadTexture("cloud2.png"),
+			Textures.loadTexture("cloud3.png"),
 		});
 	
 	private static Random random = new Random();

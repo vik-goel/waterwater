@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import water.water.ParticleGrid.Cell;
 
@@ -119,6 +118,11 @@ public abstract class Entity {
 //		
 //		sr.end();
 //		Gdx.gl20.glLineWidth(1);
+	}
+	
+	public boolean onGround() {
+		Entity collision = checkCollisions(0, -1f);
+		return collision != null && collision instanceof Platform && !((Platform)collision).dieOnHit;
 	}
 	
 	public Entity checkCollisions(float mx, float my) {

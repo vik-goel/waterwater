@@ -6,9 +6,15 @@ public class Cloud extends Entity {
 	
 	public Cloud init(float x, float y) {
 		TextureRegion tex =  RandomTexture.clouds.getRegion();
-		drawWidth = tex.getRegionWidth();
-		drawHeight = tex.getRegionHeight();
+		
+		float scale = 8;
+		drawWidth = tex.getRegionWidth() * scale;
+		drawHeight = tex.getRegionHeight() * scale;
+		
 		init(x + drawWidth * 0.5f, y, drawWidth, drawHeight, tex);
+		
+		flipX = random.nextBoolean();
+		
 		return this;
 	}
 	
