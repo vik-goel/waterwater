@@ -4,14 +4,37 @@ import java.util.ArrayList;
 
 public class Pool<T> {
 	
-	public static Pool<Water> water = new Pool<Water>(1000, new Water());
-	public static Pool<Goose> goose = new Pool<Goose>(20, new Goose());
-	public static Pool<Platform> platform = new Pool<Platform>(20, new Platform());
-	public static Pool<Cloud> cloud = new Pool<Cloud>(20, new Cloud());
-	public static Pool<WaterItem> waterItem = new Pool<WaterItem>(20, new WaterItem());
-	public static Pool<FlyingGoose> flyingGoose = new Pool<FlyingGoose>(20, new FlyingGoose());
-	public static Pool<Poop> poop = new Pool<Poop>(20, new Poop());
-	public static Pool<PoopHitText> poopHitText = new Pool<PoopHitText>(20, new PoopHitText());
+	private static ArrayList<Pool<?>> pools = new ArrayList<Pool<?>>(20);
+	
+	public static void put(Object t) {
+		Class<?> tClass = t.getClass();
+		getPool(tClass).insert(t);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <E> E get(Class<E> tClass) {
+		return (E)getPool(tClass).acquire();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <E> Pool<E> getPool(Class<?> tClass) {
+		for(int i = 0; i < pools.size(); i++) {
+			Pool<?> p = pools.get(i);
+			Class<?> c =  (Class<?>) p.t.getClass();
+			
+			if(c.equals(tClass)) {
+				return (Pool<E>)p;
+			}
+		}
+		
+		try {
+			return new Pool<E>(100, (E)tClass.getConstructor().newInstance());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	private ArrayList<T> objects;
 	private T t;
@@ -19,10 +42,11 @@ public class Pool<T> {
 	public Pool(int numObjects, T t) {
 		objects = new ArrayList<T>(numObjects);
 		this.t = t;
+		pools.add(this);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public T get() {
+	public T acquire() {
 		if(objects.isEmpty()) {
 			try {
 				return (T)(t.getClass().getConstructor().newInstance());
@@ -36,7 +60,7 @@ public class Pool<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void put(Object t) {
+	public void insert(Object t) {
 		objects.add((T)t);
 	}
 	

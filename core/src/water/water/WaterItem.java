@@ -16,6 +16,8 @@ public class WaterItem extends Entity {
 		collideHeight *= 0.15f;
 		collideY += collideHeight * 0.9f;
 		
+		drawOrder = Entity.DRAWORDER_WATER_ITEM;
+		
 		return this;
 	}
 	

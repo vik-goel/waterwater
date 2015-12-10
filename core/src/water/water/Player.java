@@ -17,6 +17,8 @@ public class Player extends Entity {
 		collideHeight *= 0.7f;
 		
 		poopTime = 0;
+		
+		drawOrder = Entity.DRAWORDER_PLAYER;
 	}
 	
 	public float stepGravity(float dt) {
@@ -119,7 +121,7 @@ public class Player extends Entity {
 			float spawnChangeX = (float)(Math.cos(spawnAngle) * spawnRadius);
 			float spawnChangeY = (float)(Math.sin(spawnAngle) * spawnRadius);
 			
-			game.addParticle(Pool.water.get().init(startX + spawnChangeX, startY + spawnChangeY, dx, dy));
+			game.addParticle(Pool.get(Water.class).init(startX + spawnChangeX, startY + spawnChangeY, dx, dy));
 		}
 		
 		game.water -= particlesToSpawn;

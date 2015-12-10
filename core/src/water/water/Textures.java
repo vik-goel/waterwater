@@ -11,10 +11,9 @@ public class Textures {
 	public static TextureRegion playerJumpShoot = loadTexture("player-jump-shoot.png");
 	public static TextureRegion playerJumpPoop = loadTexture("player-jump-poopface.png");
 	public static TextureRegion water = loadTexture("water.png");
-	public static TextureRegion goose = loadTexture("platform.png");
 	public static TextureRegion grass = loadTexture("grass.png");
 	public static TextureRegion backdrop = loadTexture("backdrop.png");
-	public static TextureRegion playAgainButton = loadTexture("platform.png");
+	public static TextureRegion playAgainButton = loadTexture("grass.png");
 	
 	public static TextureRegion poop = loadTexture("poop.png");
 	public static TextureRegion poop2 = loadTexture("poop2.png");

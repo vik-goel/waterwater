@@ -18,6 +18,9 @@ public class Platform extends Entity {
 		
 		if(dieOnHit) {
 			this.y -= collideY;
+			drawOrder = Entity.DRAWORDER_GROUND_OBSTACLE;
+		} else {
+			drawOrder = Entity.DRAWORDER_GROUND;
 		}
 		
 		return this;

@@ -24,7 +24,7 @@ public class LevelSpawner {
 	}
 	
 	private void makeGround(float x, float width) {
-		ground = Pool.platform.get().init(x, 0, width, groundHeight, false, Textures.grass, -0.25f, 0.5f, 0, 1);
+		ground = Pool.get(Platform.class).init(x, 0, width, groundHeight, false, Textures.grass, -0.25f, 0.5f, 0, 1);
 		game.addObject(ground);
 	}
 	
@@ -79,16 +79,16 @@ public class LevelSpawner {
 				
 				float shrubWidth = shrubHeight * ((float)tex.getRegionWidth() / (float)tex.getRegionHeight());
 				
-				game.addObject(Pool.platform.get().init(offscreenX, y * Gdx.graphics.getHeight(), shrubWidth, shrubHeight, true, tex, collideYC, collideHeightC, collideXC, collideWidthC));
+				game.addObject(Pool.get(Platform.class).init(offscreenX, y * Gdx.graphics.getHeight(), shrubWidth, shrubHeight, true, tex, collideYC, collideHeightC, collideXC, collideWidthC));
 				break;
 			case 1: //gap
 				makeGround(offscreenX + Gdx.graphics.getWidth() * (0.15f + random.nextFloat() * 0.175f), 0);
 				break;
 			case 2: //goose
-				game.addObject(Pool.goose.get().init(offscreenX, -groundHeight * 0.5f));
+				game.addObject(Pool.get(Goose.class).init(offscreenX, -groundHeight * 0.5f));
 				break;
 			case 3: //water item
-				game.addObject(Pool.waterItem.get().init(offscreenX, 0.28f * Gdx.graphics.getHeight()));
+				game.addObject(Pool.get(WaterItem.class).init(offscreenX, 0.28f * Gdx.graphics.getHeight()));
 				break;
 			}
 			
@@ -97,13 +97,13 @@ public class LevelSpawner {
 		
 		if(cloudDelay <= 0) {
 			float cloudY = Gdx.graphics.getHeight() * (0.7f + random.nextFloat() * 0.25f);
-			game.addCloud(Pool.cloud.get().init(offscreenX, cloudY));
+			game.addCloud(Pool.get(Cloud.class).init(offscreenX, cloudY));
 			cloudDelay = 1.1f + random.nextFloat() * 0.7f;
 		}
 		
 		if(flyingGooseDelay <= 0) {
 			float gooseY = Gdx.graphics.getHeight() * (0.7f + random.nextFloat() * 0.15f);
-			game.addObject(Pool.flyingGoose.get().init(offscreenX, gooseY));
+			game.addObject(Pool.get(FlyingGoose.class).init(offscreenX, gooseY));
 			
 			flyingGooseDelay = random.nextFloat() * 0.9f + 0.5f;
 		}

@@ -81,32 +81,6 @@ public class GameScreen implements Screen {
 	}
 	
 	public void addObject(Entity e) {
-		if(e instanceof Platform) {
-			if(((Platform)e).dieOnHit) {
-				e.drawOrder = Entity.DRAWORDER_GROUND_OBSTACLE;
-			} else {
-				e.drawOrder = Entity.DRAWORDER_GROUND;
-			}
-		}
-		else if(e instanceof Goose) {
-			e.drawOrder = Entity.DRAWORDER_GOOSE;
-		}
-		else if (e instanceof Player) {
-			e.drawOrder = Entity.DRAWORDER_PLAYER;
-		}
-		else if(e instanceof WaterItem) {
-			e.drawOrder = Entity.DRAWORDER_WATER_ITEM;
-		}
-		else if(e instanceof FlyingGoose) {
-			e.drawOrder = Entity.DRAWORDER_GOOSE;
-		}
-		else if(e instanceof Poop) {
-			e.drawOrder = Entity.DRAWORDER_POOP;
-		}
-		else if(e instanceof PoopHitText) {
-			e.drawOrder = Entity.DRAWORDER_PLAYER_SPEECH;
-		}
-		
 		boolean added = false;
 		
 		for(int i = 0; i < objects.size(); i++) {
@@ -240,37 +214,7 @@ public class GameScreen implements Screen {
 			
 			if(e.removed) {
 				entities.remove(i--);
-				
-				if (e instanceof Water) {
-					Pool.water.put(e);
-					particles.remove(e);
-				}
-				else if (e instanceof Cloud) {
-					Pool.cloud.put(e);
-					clouds.remove(e);
-				}
-				else {
-					objects.remove(e);
-					if (e instanceof Goose) {
-						Pool.goose.put(e);
-					}
-					else if (e instanceof Platform) {
-						Pool.platform.put(e);
-					}
-					
-					else if (e instanceof WaterItem) {
-						Pool.waterItem.put(e);
-					}
-					else if (e instanceof FlyingGoose) {
-						Pool.flyingGoose.put(e);
-					}
-					else if(e instanceof Poop) {
-						Pool.poop.put(e);
-					}
-					else if(e instanceof PoopHitText) {
-						Pool.poopHitText.put(e);
-					}
-				}
+				Pool.put(e);
 			} else {
 				e.draw(dt);	
 			}

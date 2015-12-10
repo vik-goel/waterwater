@@ -43,6 +43,8 @@ public class Goose extends Entity {
 		startY = this.y;
 		playerStager = random.nextFloat() * Gdx.graphics.getWidth() * 0.2f;
 		
+		drawOrder = Entity.DRAWORDER_GOOSE;
+		
 		return this;
 	}
 	
@@ -61,6 +63,8 @@ public class Goose extends Entity {
 			break;
 		case CHASING:
 			chasingUpdate(dt);
+			break;
+		default:
 			break;
 		}
 	}

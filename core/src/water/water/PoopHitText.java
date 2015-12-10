@@ -12,6 +12,8 @@ public class PoopHitText extends Entity {
 		
 		alpha = 2;
 		
+		drawOrder = Entity.DRAWORDER_PLAYER_SPEECH;
+		
 		return this;
 	}
 	

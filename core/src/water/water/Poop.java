@@ -19,6 +19,8 @@ public class Poop extends Entity {
 		
 		collideY += collideHeight;
 		
+		drawOrder = Entity.DRAWORDER_POOP;
+		
 		return this;
 	}
 	
@@ -37,7 +39,7 @@ public class Poop extends Entity {
 		removed = true;
 		
 		PoopHitText poopText;
-		game.addObject(poopText = Pool.poopHitText.get().init());
+		game.addObject(poopText = Pool.get(PoopHitText.class).init());
 		game.player.poopTime = poopText.alpha;
 		
 		return false;

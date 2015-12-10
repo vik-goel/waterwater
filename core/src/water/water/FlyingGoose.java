@@ -23,6 +23,8 @@ public class FlyingGoose extends Entity {
 		
 		flipX = true;
 		
+		drawOrder = Entity.DRAWORDER_GOOSE;
+		
 		return this;
 	}
 	
@@ -33,7 +35,7 @@ public class FlyingGoose extends Entity {
 		poopDelay -= dt;
 		
 		if(poopDelay <= 0) {
-			game.addObject(Pool.poop.get().init(x, y));
+			game.addObject(Pool.get(Poop.class).init(x, y));
 			setPoopDelay();
 		}
 		
