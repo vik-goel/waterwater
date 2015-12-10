@@ -16,7 +16,7 @@ public class Water extends Entity {
 	boolean justSpawned = true;
 	
 	public Entity init(float x, float y, float dx, float dy) {
-		init(x, y, getDim(), getDim(), Textures.water);
+		init(0, x, y, getDim(), getDim(), Textures.water);
 		
 		ddx = ddy = dAlpha = 0;
 		
@@ -113,11 +113,6 @@ public class Water extends Entity {
 				sr.triangle(pastPos.x + xDiff * 50, pastPos.y + yDiff * 50, x2, y2, x3, y3, colors[0], colors[1], colors[2]);
 				sr.end();
 			}
-			
-//			sr.begin(ShapeType.Filled);
-//			sr.setColor(119f/255f, 167/255f, 248f/255f, 1);
-//			sr.oval();
-//			sr.end();
 		}
 		
 		pastPos.set(x, y);

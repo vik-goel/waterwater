@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGame extends Game {
 	
 	private SpriteBatch batch;
+	public GameScreen gameScreen;
 	
 	public void create () {
-		setScreen(new GameScreen(this));
+		setScreen(gameScreen = new GameScreen(this));
 		//setScreen(new DeathScreen(this));
 		batch = new SpriteBatch();
 	}

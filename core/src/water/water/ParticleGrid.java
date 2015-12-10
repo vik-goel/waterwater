@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class ParticleGrid {
 
-	static final boolean debug = true;
 	ShapeRenderer sr;
 	
 	Cell[][] cells;
@@ -20,7 +19,7 @@ public class ParticleGrid {
 	public ParticleGrid(GameScreen game) {
 		this.game = game;
 		
-		xOffset = -Gdx.graphics.getWidth();
+		reset();
 		
 		float totalWidth = Gdx.graphics.getWidth() + xOffset * -2;
 		float totalHeight = Gdx.graphics.getHeight() * 2;
@@ -38,9 +37,11 @@ public class ParticleGrid {
 			}
 		}
 		
-		if(debug) {
-			sr = new ShapeRenderer();
-		}
+		sr = new ShapeRenderer();
+	}
+	
+	public void reset() {
+		xOffset = -Gdx.graphics.getWidth();
 	}
 	
 	public void draw(float dt) {
@@ -72,7 +73,6 @@ public class ParticleGrid {
 		}
 		
 		
-		if(debug) {
 			Entity.batch.setColor(0.2f, 0.2f, 1f, 0.5f);
 			
 			Util.enableBlend();
@@ -88,30 +88,22 @@ public class ParticleGrid {
 					int numParticles = cell.particles.size();
 					
 					if(numParticles > 0) {
-						//float alpha = 0.1f;
 						float grey = Math.max(0, 1 - numParticles * 0.2f);
 						
 						sr.begin(ShapeType.Filled);
-						//sr.setColor(grey, grey, grey, alpha);
 						sr.setColor(119f/255f, 167/255f, 248f/255f, (grey * 0.6f) + 0.4f);
 						sr.rect(drawX, y, cellSize, cellSize);
-						//sr.circle(drawX + cellSize * 0.5f, y + cellSize * 0.5f, (float)(Math.sqrt(2)*cellSize));
 						sr.end();
 						
-//						sr.begin(ShapeType.Line);
-//						sr.setColor(0, 0, 0, 1);
-//						sr.rect(drawX, y, cellSize, cellSize);
-//						sr.end();
-						
-//						Entity.batch.begin();
-//						Entity.batch.draw(Textures.arrow, drawX, y, cellSize * 0.5f, cellSize * 0.5f, cellSize, cellSize, 1, 1, (float)Math.toDegrees(Math.atan2(cell.dy, cell.dx)));
-//						Entity.batch.end();
+						sr.begin(ShapeType.Line);
+						sr.setColor(119f/255f, 167/255f, 248f/255f, (grey * 0.5f) + 0.5f);
+						sr.rect(drawX, y, cellSize, cellSize);
+						sr.end();
 					}
 				}
 			}
 			
 			Entity.batch.setColor(1, 1, 1, 1);
-		}
 		
 		for(int i = 0; i < cells.length; i++) {
 			for(int j = 0; j < cells[0].length; j++) {

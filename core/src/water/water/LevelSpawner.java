@@ -10,9 +10,9 @@ public class LevelSpawner {
 	private GameScreen game;
 	private Random random = new Random();
 	
-	private float obstacleDelay = 0.2f;
-	private float cloudDelay = 0;
-	private float flyingGooseDelay = 0.5f;
+	private float obstacleDelay;
+	private float cloudDelay;
+	private float flyingGooseDelay;
 	
 	private Platform ground;
 	private float groundHeight;
@@ -20,7 +20,14 @@ public class LevelSpawner {
 	public LevelSpawner(GameScreen game) {
 		this.game = game;
 		groundHeight = 0.07f * Gdx.graphics.getHeight();
+		
+	}
+	
+	public void reset() {
 		makeGround(0, Gdx.graphics.getWidth());
+		obstacleDelay = 0.2f;
+		cloudDelay = 0;
+		flyingGooseDelay = 0.5f;
 	}
 	
 	private void makeGround(float x, float width) {

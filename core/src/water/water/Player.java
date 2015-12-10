@@ -7,8 +7,8 @@ public class Player extends Entity {
 
 	public float poopTime;
 	
-	public Player(float x, float y) {
-		super(x, y, Gdx.graphics.getHeight() * 0.25f, Gdx.graphics.getHeight() * 0.25f, Animation.playerRunNormal);
+	public Player init(float x, float y) {
+		super.init(DRAWORDER_PLAYER, x, y, Gdx.graphics.getHeight() * 0.25f, Gdx.graphics.getHeight() * 0.25f, Animation.playerRunNormal);
 		
 		collideX = collideHeight * -0.1f;
 		collideY = collideHeight * -0.1f;
@@ -18,7 +18,7 @@ public class Player extends Entity {
 		
 		poopTime = 0;
 		
-		drawOrder = Entity.DRAWORDER_PLAYER;
+		return this;
 	}
 	
 	public float stepGravity(float dt) {
@@ -54,7 +54,7 @@ public class Player extends Entity {
 		move((dx + game.dCameraX) * dt, stepGravity(dt));
 		
 		if(shooting) {
-			shoot(x + drawWidth * 0.2f, y + drawHeight * 0.1f, shootTarget.x, shootTarget.y);
+			shoot(x + drawWidth * 0.2f, y + drawHeight * 0.1f, shootTarget.x, shootTarget.y, dt);
 		}
 		
 		if (y + drawHeight * 0.5f < 0) {
@@ -97,7 +97,7 @@ public class Player extends Entity {
 		super.draw(dt);
 	}
 	
-	public void shoot(float startX, float startY, float targetX, float targetY) {
+	public void shoot(float startX, float startY, float targetX, float targetY, float dt) {
 		if(poopTime > 0) {
 			return;
 		}
@@ -105,16 +105,15 @@ public class Player extends Entity {
 		float deltaX = targetX - startX;
 		float deltaY = targetY - startY;
 		
-		float theta = (float) Math.atan2(deltaY, deltaX);
-		
 		float v = Gdx.graphics.getHeight() * 1.06f;
-		float dx = (float) (v * Math.cos(theta)) + game.dCameraX;
-		float dy = (float) (v * Math.sin(theta));
+		float invLength = v / Util.length(deltaX, deltaY);
+		
+		float dx = deltaX * invLength + game.dCameraX;
+		float dy = deltaY * invLength;
 		
 		float spawnRadius = 5;
 	
-		//TODO: The maximum particle spawn limit should be a function of dt
-		int particlesToSpawn = Math.min(30, game.water);
+		int particlesToSpawn = Math.min((int)(dt * 1800), game.water);
 		
 		for(int i = 0; i < particlesToSpawn; i++) {
 			float spawnAngle = (float)(random.nextFloat() * Math.PI * 2);
@@ -126,16 +125,7 @@ public class Player extends Entity {
 		
 		game.water -= particlesToSpawn;
 		
-//		float totalDx = particlesToSpawn * dx;
 		float totalDy = particlesToSpawn * dy;
-		
-//		if(totalDx > 0) {
-//			this.dx -= 0.00008f * totalDx;
-//		}
-//		else {
-//			this.dx -= 0.0008f * totalDx;
-//		}
-		
 		this.dy -= 0.002f * totalDy;
 	}
 	

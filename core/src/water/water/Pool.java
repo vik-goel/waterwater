@@ -8,16 +8,19 @@ public class Pool<T> {
 	
 	public static void put(Object t) {
 		Class<?> tClass = t.getClass();
-		getPool(tClass).insert(t);
+		Pool<?> p = getPool(tClass, t);
+		
+		if(p != null) {
+			p.insert(t);
+		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <E> E get(Class<E> tClass) {
-		return (E)getPool(tClass).acquire();
+		return (E)getPool(tClass, null).acquire();
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static <E> Pool<E> getPool(Class<?> tClass) {
+	private static <E> Pool<E> getPool(Class<E> tClass, Object elem) {
 		for(int i = 0; i < pools.size(); i++) {
 			Pool<?> p = pools.get(i);
 			Class<?> c =  (Class<?>) p.t.getClass();
@@ -28,7 +31,11 @@ public class Pool<T> {
 		}
 		
 		try {
-			return new Pool<E>(100, (E)tClass.getConstructor().newInstance());
+			if(elem == null) {
+				return new Pool<E>((E)tClass.getConstructor().newInstance());
+			} else {
+				new Pool<E>((E)elem);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,8 +46,9 @@ public class Pool<T> {
 	private ArrayList<T> objects;
 	private T t;
 	
-	public Pool(int numObjects, T t) {
-		objects = new ArrayList<T>(numObjects);
+	public Pool(T t) {
+		objects = new ArrayList<T>(100);
+		objects.add(t);
 		this.t = t;
 		pools.add(this);
 	}

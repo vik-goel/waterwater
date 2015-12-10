@@ -11,7 +11,7 @@ public class Cloud extends Entity {
 		drawWidth = tex.getRegionWidth() * scale;
 		drawHeight = tex.getRegionHeight() * scale;
 		
-		init(x + drawWidth * 0.5f, y, drawWidth, drawHeight, tex);
+		init(0, x + drawWidth * 0.5f, y, drawWidth, drawHeight, tex);
 		
 		flipX = random.nextBoolean();
 		

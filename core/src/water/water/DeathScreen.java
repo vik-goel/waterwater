@@ -24,7 +24,7 @@ public class DeathScreen implements Screen {
 	}
 	
 	public void show() {
-		
+		Sounds.mute();
 	}
 
 	public void render(float delta) {
@@ -37,7 +37,7 @@ public class DeathScreen implements Screen {
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-			myGame.setScreen(new GameScreen(myGame));
+			myGame.setScreen(myGame.gameScreen);
 		}
 	}
 

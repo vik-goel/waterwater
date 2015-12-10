@@ -20,18 +20,18 @@ public class Goose extends Entity {
 	float startY;
 	float playerStager;
 	
-	public Goose() {
-		idleAnim = new Animation(Animation.idleGoose);
-		chaseAnim = new Animation(Animation.runningGoose);
-		deadAnim = new Animation(Animation.deathGoose);
-		flyAnim = new Animation(Animation.flyingGoose);
-	}
-	
 	public Goose init(float x, float y) {
+		if(idleAnim == null) {
+			idleAnim = new Animation(Animation.idleGoose);
+			chaseAnim = new Animation(Animation.runningGoose);
+			deadAnim = new Animation(Animation.deathGoose);
+			flyAnim = new Animation(Animation.flyingGoose);
+		}
+		
 		float width = Gdx.graphics.getWidth() * 0.3f;
 		float height = Util.getHeight(width, Animation.runningGoose.getRegion());
 		
-		init(x + width * 0.5f, y + height * 0.5f, width, height, idleAnim);
+		init(DRAWORDER_GOOSE, x + width * 0.5f, y + height * 0.5f, width, height, idleAnim);
 		
 		collideX = drawWidth * 0.02f;
 		collideWidth *= 0.27f;
@@ -42,8 +42,6 @@ public class Goose extends Entity {
 		
 		startY = this.y;
 		playerStager = random.nextFloat() * Gdx.graphics.getWidth() * 0.2f;
-		
-		drawOrder = Entity.DRAWORDER_GOOSE;
 		
 		return this;
 	}

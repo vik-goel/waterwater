@@ -42,28 +42,19 @@ public abstract class Entity {
 	public int drawOrder;
 	public boolean flipX;
 	
-	public Entity(){}
-	
-	public Entity(float x, float y, float drawWidth, float drawHeight, Animation animation) {
-		init(x, y, drawWidth, drawHeight, animation);
-	}
-	
-	public Entity(float x, float y, float drawWidth, float drawHeight, TextureRegion tex) {
-		init(x, y, drawWidth, drawHeight, tex);
-	}
-	
-	public Entity init(float x, float y, float drawWidth, float drawHeight, Animation animation) {
-		init(x, y, drawWidth, drawHeight, animation.getRegion());
+	public Entity init(int drawOrder, float x, float y, float drawWidth, float drawHeight, Animation animation) {
+		init(drawOrder, x, y, drawWidth, drawHeight, animation.getRegion());
 		this.animation = animation;
 		return this;
 	}
 	
-	public Entity init(float x, float y, float drawWidth, float drawHeight, TextureRegion tex) {
+	public Entity init(int drawOrder, float x, float y, float drawWidth, float drawHeight, TextureRegion tex) {
 		this.x = x;
 		this.y = y;
 		this.drawWidth = drawWidth;
 		this.drawHeight = drawHeight;
 		this.tex = tex;
+		this.drawOrder = drawOrder;
 		
 		collideWidth = drawWidth;
 		collideHeight = drawHeight;
@@ -74,7 +65,6 @@ public abstract class Entity {
 		alpha = 1;
 		seamlessTexture = false;
 		flipX = false;
-		drawOrder = 0;
 		
 		return this;
 	}

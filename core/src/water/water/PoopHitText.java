@@ -8,11 +8,9 @@ public class PoopHitText extends Entity {
 		float height = Gdx.graphics.getHeight() * 0.075f;
 		float width = Util.getWidth(height, Textures.poopHitText);
 		
-		init(x, y, width, height, Textures.poopHitText);
+		init(DRAWORDER_PLAYER_SPEECH, x, y, width, height, Textures.poopHitText);
 		
 		alpha = 2;
-		
-		drawOrder = Entity.DRAWORDER_PLAYER_SPEECH;
 		
 		return this;
 	}

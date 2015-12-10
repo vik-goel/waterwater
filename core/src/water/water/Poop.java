@@ -12,14 +12,12 @@ public class Poop extends Entity {
 		
 		y -= height * 0.25f;
 		
-		init(x, y, width, height, animation);
+		init(Entity.DRAWORDER_POOP, x, y, width, height, animation);
 		
 		collideHeight *= 0.2f;
 		collideWidth *= 0.25f;
 		
 		collideY += collideHeight;
-		
-		drawOrder = Entity.DRAWORDER_POOP;
 		
 		return this;
 	}

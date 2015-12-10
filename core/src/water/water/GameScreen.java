@@ -38,6 +38,7 @@ public class GameScreen implements Screen {
 	public float score;
 	
 	public BitmapFont font;
+	private DeathScreen deathScreen;
 	
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -51,16 +52,27 @@ public class GameScreen implements Screen {
 		}
 		
 		font = new BitmapFont();
+		
+		particleGrid = new ParticleGrid(this);
+		levelSpawner = new LevelSpawner(this);
 	}
 	
 	public void show() {
 		Entity.game = this;
 		
-		particleGrid = new ParticleGrid(this);
+		for(int i = 0; i < entities.size(); i++) {
+			Pool.put(entities.get(i));
+		}
 		
-		addObject(player = new Player(Gdx.graphics.getWidth() * 0.33f, 0.5f * Gdx.graphics.getHeight()));
+		entities.clear();
+		objects.clear();
+		particles.clear();
+		clouds.clear();
 		
-		levelSpawner = new LevelSpawner(this);
+		particleGrid.reset();
+		levelSpawner.reset();
+		
+		addObject(player = Pool.get(Player.class).init(Gdx.graphics.getWidth() * 0.33f, 0.5f * Gdx.graphics.getHeight()));
 		
 		water = maxWater;
 		score = 0;
@@ -248,9 +260,13 @@ public class GameScreen implements Screen {
 			dieImmediate();
 		}
 	}
-
+	
 	public void dieImmediate() {
-		myGame.setScreen(new DeathScreen(myGame));
+		if(deathScreen == null) {
+			deathScreen = new DeathScreen(myGame);
+		}
+		
+		myGame.setScreen(deathScreen);
 	}
 
 }

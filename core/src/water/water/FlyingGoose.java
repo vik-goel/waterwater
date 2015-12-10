@@ -10,20 +10,18 @@ public class FlyingGoose extends Entity {
 		float width = Gdx.graphics.getWidth() * 0.25f;
 		float height = Util.getHeight(width, Animation.flyingGoose.getRegion());
 				
-		init(x, y, width, height, Animation.flyingGoose);
+		init(DRAWORDER_GOOSE, x, y, width, height, Animation.flyingGoose);
 		
 		collideX -= drawWidth * 0.15f;
 		collideY -= drawHeight * 0.1f;
 		
-		collideWidth *= 0.35f;
-		collideHeight *= 0.4f;
+		collideWidth *= 0.3f;
+		collideHeight *= 0.25f;
 		
 		dx = Gdx.graphics.getWidth() * 0.2f;
 		setPoopDelay();
 		
 		flipX = true;
-		
-		drawOrder = Entity.DRAWORDER_GOOSE;
 		
 		return this;
 	}
