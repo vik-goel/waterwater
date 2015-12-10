@@ -43,7 +43,7 @@ public class LevelSpawner {
 		if(obstacleDelay <= 0) {
 			switch(random.nextInt(4)) {
 			case 0: //ground obstacle
-				TextureRegion tex = RandomTexture.groundObstacle.getRegion();
+				TextureRegion tex = RandomItem.groundObstacle.get();
 				
 				float collideYC = 0, collideHeightC = 1, collideXC = 0, collideWidthC = 1, y = 0.2f;
 				

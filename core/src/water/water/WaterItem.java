@@ -29,6 +29,7 @@ public class WaterItem extends Entity {
 		removed = true;
 		
 		game.water = game.maxWater;
+		RandomItem.powerupSounds.get().play();
 		
 		return true;
 	}

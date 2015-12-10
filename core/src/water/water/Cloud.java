@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Cloud extends Entity {
 	
 	public Cloud init(float x, float y) {
-		TextureRegion tex =  RandomTexture.clouds.getRegion();
+		TextureRegion tex = RandomItem.clouds.get();
 		
 		float scale = 8;
 		drawWidth = tex.getRegionWidth() * scale;

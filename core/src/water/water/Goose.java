@@ -72,6 +72,7 @@ public class Goose extends Entity {
 		
 		if(isHitByWater()) {
 			state = State.FLYING;
+			RandomItem.geeseSounds.get().play();
 		}
 	}
 	

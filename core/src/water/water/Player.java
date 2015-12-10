@@ -181,6 +181,7 @@ public class Player extends Entity {
 				if(collision instanceof Platform && ((Platform)collision).dieOnHit) {
 					game.die();
 					collision.removed = true;
+					RandomItem.hitSounds.get().play();
 				}
 				
 				return false;

@@ -35,7 +35,7 @@ public class Textures {
 		TextureRegion result = null;
 		
 		try {
-			Texture texture = new Texture(path);
+			Texture texture = new Texture("textures/"+path);
 			texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 			

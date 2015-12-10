@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 public class Poop extends Entity {
 
 	public Poop init(float x, float y) {
-		animation = RandomAnimation.flyingPoop.getAnim(); 
+		animation = RandomItem.flyingPoop.get(); 
 		
 		float height = Gdx.graphics.getHeight() * 0.2f;
 		float width = Util.getWidth(height, animation.getRegion());
@@ -29,14 +29,12 @@ public class Poop extends Entity {
 		dy -= GRAVITY * dt;
 		
 		if(isHitByWater()) {
-			System.out.println("hit by water");
 			removed = true;
 		}
 	}
 	
 	public boolean playerHit() {
 		removed = true;
-		System.out.println("hit by player");
 		
 		PoopHitText poopText;
 		game.addObject(poopText = Pool.poopHitText.get().init());
