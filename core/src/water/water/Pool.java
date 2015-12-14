@@ -1,5 +1,6 @@
 package water.water;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class Pool<T> {
@@ -39,25 +40,32 @@ public class Pool<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		 
 		return null;
 	}
 	
 	private ArrayList<T> objects;
 	private T t;
+	private Constructor<T> tConstructor;
 	
+	@SuppressWarnings("unchecked")
 	public Pool(T t) {
 		objects = new ArrayList<T>(100);
-		objects.add(t);
 		this.t = t;
+		
+		objects.add(t);
+		try {
+			this.tConstructor = (Constructor<T>) t.getClass().getConstructor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		pools.add(this);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public T acquire() {
 		if(objects.isEmpty()) {
 			try {
-				return (T)(t.getClass().getConstructor().newInstance());
+				return (T)(tConstructor.newInstance());
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;

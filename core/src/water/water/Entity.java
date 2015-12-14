@@ -56,6 +56,8 @@ public abstract class Entity {
 		this.tex = tex;
 		this.drawOrder = drawOrder;
 		
+		animation = null;
+		
 		collideWidth = drawWidth;
 		collideHeight = drawHeight;
 		

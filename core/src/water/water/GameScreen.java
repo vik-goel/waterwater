@@ -225,7 +225,12 @@ public class GameScreen implements Screen {
 			Entity e = entities.get(i);
 			
 			if(e.removed) {
-				entities.remove(i--);
+				i--;
+				this.entities.remove(e);
+				clouds.remove(e);
+				particles.remove(e);
+				objects.remove(e);
+				
 				Pool.put(e);
 			} else {
 				e.draw(dt);	
